@@ -1,10 +1,7 @@
 // VideoPlayer.js
 import { Box } from "@chakra-ui/react";
 import React from "react";
-const HOST =
-  process.env.NODE_ENV === "production"
-    ? "https://mancode.onrender.com"
-    : "http://localhost:8080";
+
 const VideoPlayer = ({ currentVideo }) => {
   return (
     <Box h={["300px", "400px", "600px"]} bg="gray.200">
