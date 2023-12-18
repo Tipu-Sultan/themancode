@@ -51,7 +51,6 @@ const dropdownLinks = Links.slice(5); // Links to be included in the dropdown
 
 export default function WithAction() {
   useEffect(() => {
-    // Fetch user logs from your MongoDB API endpoint
     const fetchData = async () => {
       try {
         const response = await axios.post(`${process.env.REACT_APP_API_HOST}/api/userlogs`);

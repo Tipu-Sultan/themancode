@@ -30,7 +30,6 @@ const Videos = () => {
   const [newComment, setNewComment] = useState("");
   const [comments, setComments] = useState([]);
   const [replies, setReplies] = useState({});
-  const [currentVideoReplies, setCurrentVideoReplies] = useState({});
   const [openReplyTextareaForComment, setOpenReplyTextareaForComment] = useState(null);
 
   // Function to handle like action
@@ -285,10 +284,7 @@ const Videos = () => {
           (comment) => comment._id !== commentId
         ),
       }));
-      setCurrentVideoReplies((prevReplies) => {
-        const { [commentId]: _, ...updatedReplies } = prevReplies;
-        return updatedReplies;
-      });
+      
     });
 
     newSocket.on("deleteReply", ({ commentId, replyId }) => {

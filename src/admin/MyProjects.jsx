@@ -15,7 +15,6 @@ import {
   
   export default function CodeBlock() {
     const [myProjects, setMyProjects] = useState([]);
-    const [errorMsg, setErrorMsg] = useState("");
     const [loading, setLoading] = useState(true); // Added loading state
     const isLogin = localStorage.getItem("isLogin");
     const isUser = isLogin ? JSON.parse(isLogin) : null;
@@ -85,15 +84,6 @@ import {
             mt={90}
             mb={20}
           >
-            <Text
-              position="absolute"
-              top="50%"
-              left="50%"
-              transform="translate(-50%, -50%)"
-              fontSize="2xl"
-            >
-              {errorMsg}
-            </Text>
             {myProjects.map((item, i) => (
               <Box
                 key={i}
