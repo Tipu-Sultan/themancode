@@ -37,6 +37,7 @@ const Links = [
   { text: "CodeBlock", url: "/codeblock" },
   { text: "Videos", url: "/videos" },
   { text: "Certificates", url: "/my-certificates" },
+  { text: "UrlShortener", url: "/url-shortener" },
   { text: "Coins", url: "/coins" },
   { text: "Exchanges", url: "/exchanges" },
   { text: "News", url: "/news" },

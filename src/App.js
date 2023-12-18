@@ -30,6 +30,7 @@ import CoinDetails from "./coin/CoinDetails";
 import PageNotFound from "./miscellaneous/PageNotFound";
 import Newswala from "./miscellaneous/Newswala";
 import Certificates from "./miscellaneous/Certificates";
+import UrlShortener from "./miscellaneous/ShortUrl";
 
 
 const App = () => {
@@ -65,6 +66,7 @@ const App = () => {
         <Route path="/coin/:id" element={<CoinDetails />} />
 
         <Route path="/news" element={<Newswala />} />
+        <Route path="/url-shortener" element={<UrlShortener />} />
         <Route path="/my-certificates" element={<Certificates />} />
 
         <Route path="/codeblock" element={<CodeBlock />} />
