@@ -1,0 +1,12 @@
+.fancyborderradius{
+    border-radius: 38% 62% 73% 27% / 50% 62% 38% 50%  ;
+        
+    height: 400px;
+    background: #cb76a9;
+    background: -webkit-linear-gradient(to right,
+        #615ea3,
+        #89cb5c);
+    background: linear-gradient(to right,
+        #3b1053,
+        #734e65);
+  }

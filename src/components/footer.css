@@ -1,0 +1,21 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  main {
+    flex: 1; /* Allow main content area to take remaining height */
+    overflow-y: auto; /* Enable vertical scrolling for content */
+  }
+  
+  .footer {
+    flex-shrink: 0; /* Do not shrink the footer */
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    z-index: 999; /* Ensure footer stays on top of other content */
+  }
+  
