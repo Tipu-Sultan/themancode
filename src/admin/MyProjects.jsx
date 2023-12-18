@@ -55,7 +55,7 @@ import {
         };
     
         fetchData();
-      }, []);
+      }, [HOST]);
   
     return (
       <Flex

@@ -73,8 +73,6 @@ export default function WithAction() {
   const handleLogout = () => {
     localStorage.removeItem("isLogin"); // Remove the isLogin from local storage
     localStorage.removeItem("token");
-    localStorage.removeItem("userData");
-    localStorage.setItem("currentPath");
     // Redirect or update application state accordingly
     setTimeout(() => navigate('/', 100));
   };

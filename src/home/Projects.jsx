@@ -36,7 +36,7 @@ const Projects = () => {
     };
 
     fetchData();
-  }, []);
+  }, [HOST]);
 
   return (
     <Flex justifyContent="center" mt={10} mb={5}>
