@@ -15,19 +15,13 @@ import { toast } from "react-toastify";
 import Layout from "../components/Layout";
 
 export default function CodeBlock() {
+  const HOST = process.env.REACT_APP_API_HOST
   const [codeBlocks, setCodeBlocks] = useState([]);
   const [errorMsg, setErrorMsg] = useState("");
   const [loading, setLoading] = useState(true); // Added loading state
   const isLogin = localStorage.getItem("isLogin");
   const isUser = isLogin ? JSON.parse(isLogin) : null;
   const isAdmin = isUser?.access === "admin";
-  let HOST = "";
-  if (process.env.NODE_ENV === "production") {
-    HOST = "https://mancode.onrender.com";
-  } else {
-    // Assuming development environment
-    HOST = "http://localhost:8080";
-  }
 
   const deleteCode = async (codeId) => {
     try {

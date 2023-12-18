@@ -20,13 +20,7 @@ const Projects = () => {
   const [wait, setWait] = useState(false);
   const colorMode1 = useColorModeValue("gray.100", "gray.900")
   const colorMode2 = useColorModeValue("gray.900", "gray.100")
-  let HOST = '';
-  if (process.env.NODE_ENV === 'production') {
-    HOST = 'https://mancode.onrender.com';
-  } else {
-    // Assuming development environment
-    HOST = 'http://localhost:8080';
-  }
+  const HOST = process.env.REACT_APP_API_HOST
   useEffect(() => {
     // Fetch data from your MongoDB API endpoint
     setWait(true)

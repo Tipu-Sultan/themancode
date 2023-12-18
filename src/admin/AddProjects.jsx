@@ -12,9 +12,7 @@ import { toast } from 'react-toastify';
 import Layout from '../components/Layout';
 
 const AddProjects = () => {
-    const HOST = process.env.NODE_ENV === 'production'
-        ? 'https://mancode.onrender.com'
-        : 'http://localhost:8080';
+    const HOST = process.env.REACT_APP_API_HOST
     const { id } = useParams();
     const [projectData, setProjectData] = useState({
         project_name: '',
@@ -38,7 +36,7 @@ const AddProjects = () => {
         if (id) {
             fetchProjectData();
         }
-    }, [id]);
+    }, [HOST, id]);
 
     const handleInput = (e) => {
         const { name, value } = e.target;
@@ -54,8 +52,8 @@ const AddProjects = () => {
 
         try {
             // Determine whether it's an add or update operation based on 'id'
-            const response = id ? axios.put(`${HOST}/api/project/${id}`, projectData) : axios.post(`${HOST}/api/project`, projectData);
-
+            const apiUrlRes = id ? axios.put(`${HOST}/api/project/${id}`, projectData) : axios.post(`${HOST}/api/project`, projectData);
+            const response = await apiUrlRes
             toast.success(response.data.message);
             setWait(false);
 

@@ -7,13 +7,7 @@ const YourComponent = () => {
   const { cid } = useParams();
   const [codeString, setCodeString] = useState("");
   const [languages, setLanguage] = useState("javascript"); // Set your default language here
-  let HOST = "";
-  if (process.env.NODE_ENV === "production") {
-    HOST = process.env.HOST
-  } else {
-    // Assuming development environment
-    HOST = "http://localhost:8080";
-  }
+  const HOST = process.env.REACT_APP_API_HOST
 
   useEffect(() => {
     const fetchCodeContent = async () => {

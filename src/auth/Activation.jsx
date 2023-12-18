@@ -8,13 +8,7 @@ import Layout from '../components/Layout';
 const Activation = () => {
   const { token } = useParams();
   const navigate = useNavigate();
-  let HOST = '';
-  if (process.env.NODE_ENV === 'production') {
-    HOST = 'https://mancode.onrender.com';
-  } else {
-    // Assuming development environment
-    HOST = 'http://localhost:8080';
-  }
+  const HOST = process.env.REACT_APP_API_HOST
 
   useEffect(() => {
     const activateUser = async () => {

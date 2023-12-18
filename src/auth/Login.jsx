@@ -21,6 +21,7 @@ import Layout from '../components/Layout';
 
 const Login = () => {
   const navigate = useNavigate();
+  const HOST = process.env.REACT_APP_API_HOST
   const [userData, setuserData] = useState({ email: '', password: '' });
   const [wait, setWait] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -36,13 +37,7 @@ const Login = () => {
   
 const AuthenticateUser = async e => {
     e.preventDefault();
-    let HOST = '';  
-    if (process.env.NODE_ENV === 'production') {
-      HOST = 'https://mancode.onrender.com';
-    } else {
-      // Assuming development environment
-      HOST = 'http://localhost:8080';
-    }
+
     setWait(true);
     try {
       const response = await axios.post(

@@ -18,7 +18,7 @@ import Layout from '../components/Layout';
 
 const Forgot = () => {
   const navigate = useNavigate();
-
+  const HOST = process.env.REACT_APP_API_HOST
   const [data, setData] = useState({ password: '', cpassword: '', otp: '' });
   const [wait, setWait] = useState(false);
   const [check, setCheck] = useState(false);
@@ -52,13 +52,7 @@ const Forgot = () => {
 
   const handleForgotPassword = async e => {
     e.preventDefault();
-    let HOST = '';
-    if (process.env.NODE_ENV === 'production') {
-      HOST = 'https://mancode.onrender.com';
-    } else {
-      // Assuming development environment
-      HOST = 'http://localhost:8080';
-    }
+
     setWait(true);
 
     try {

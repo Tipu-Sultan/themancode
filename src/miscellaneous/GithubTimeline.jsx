@@ -6,10 +6,10 @@ import { FaGithub } from "react-icons/fa";
 
 const GitHubTimeline = () => {
   const [commits, setCommits] = useState([]);
-  const username = "Tipu-Sultan"; // Replace with your GitHub username
-  const repoName = "themancode"; // Replace with your GitHub repository name
-  const accessToken = process.env.REACT_APP_GIT_KEY; // Replace with your access token
-
+  const username = "Tipu-Sultan"; 
+  const repoName = "themancode";
+  const accessToken = process.env.REACT_APP_GIT_KEY; 
+  console.log(accessToken);
   useEffect(() => {
     axios
       .get(

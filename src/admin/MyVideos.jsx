@@ -20,13 +20,7 @@ import {
     const isLogin = localStorage.getItem("isLogin");
     const isUser = isLogin ? JSON.parse(isLogin) : null;
     const isAdmin = isUser?.access === "admin";
-    let HOST = "";
-    if (process.env.NODE_ENV === "production") {
-      HOST = "https://mancode.onrender.com";
-    } else {
-      // Assuming development environment
-      HOST = "http://localhost:8080";
-    }
+    const HOST = process.env.REACT_APP_API_HOST
   
     const deleteVideos = async (vidId) => {
       try {

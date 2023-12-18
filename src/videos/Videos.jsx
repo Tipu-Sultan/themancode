@@ -9,10 +9,10 @@ import VideoDetails from "./VideoDetails";
 import CommentSection from "./CommentSection";
 import RelatedVideos from "./RelatedVideos";
 import copy from "clipboard-copy";
-import { da } from "date-fns/locale";
 import Layout from "../components/Layout";
 
 const Videos = () => {
+  const HOST = process.env.REACT_APP_API_HOST
   const [socket, setSocket] = useState(null);
   const isLogin = localStorage.getItem("isLogin");
   const isUser = isLogin ? JSON.parse(isLogin) : null;
@@ -31,13 +31,7 @@ const Videos = () => {
   const [comments, setComments] = useState([]);
   const [replies, setReplies] = useState({});
   const [currentVideoReplies, setCurrentVideoReplies] = useState({});
-  const [openReplyTextareaForComment, setOpenReplyTextareaForComment] =
-    useState(null);
-
-  const HOST =
-    process.env.NODE_ENV === "production"
-      ? "https://mancode.onrender.com"
-      : "http://localhost:8080";
+  const [openReplyTextareaForComment, setOpenReplyTextareaForComment] = useState(null);
 
   // Function to handle like action
   const handleLike = async () => {

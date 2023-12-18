@@ -7,6 +7,7 @@ import { useParams } from "react-router-dom";
 import Layout from "../components/Layout";
 
 export default function EditorApp() {
+  const HOST = process.env.REACT_APP_API_HOST
   const { cid } = useParams();
   const editorRef = useRef(null);
   const [input, setInput] = useState({ title: "", languages: "" });
@@ -21,14 +22,7 @@ export default function EditorApp() {
       [name]: value,
     }));
   };
-  let HOST = "";
-  if (process.env.NODE_ENV === "production") {
-    HOST = "https://mancode.onrender.com";
-  } else {
-    // Assuming development environment
-    HOST = "http://localhost:8080";
-  }
-
+  
   const log = async () => {
     setisLoading(true);
     if (cid) {

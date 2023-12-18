@@ -75,7 +75,7 @@ const Newswala = () => {
   };
 
   useEffect(() => {
-    const urlWithCategory = `https://newsapi.org/v2/top-headlines?country=${selectedCountry}&category=${selectedCategory}&sortBy=${selectedSort}&pageSize=${pageSize}&apiKey=cf44ae24dd1a4930a62e4d02f518fa93`;
+    const urlWithCategory = `https://newsapi.org/v2/top-headlines?country=${selectedCountry}&category=${selectedCategory}&sortBy=${selectedSort}&pageSize=${pageSize}&apiKey=${process.env.REACT_APP_GOOGLE_NEWS_KEY}`;
 
     axios
       .get(urlWithCategory)

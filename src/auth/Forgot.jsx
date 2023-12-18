@@ -16,6 +16,7 @@ const Forgot = () => {
   const navigate = useNavigate();
   const [data, setEmail] = useState({userValue:""});
   const [wait, setWait] = useState(false);
+  const HOST = process.env.REACT_APP_API_HOST 
 
   const handleInput = e => {
     const { name, value } = e.target;
@@ -27,13 +28,6 @@ const Forgot = () => {
 
   const handleForgotPassword = async (e) => {
     e.preventDefault();
-    let HOST = '';  
-    if (process.env.NODE_ENV === 'production') {
-      HOST = 'https://mancode.onrender.com';
-    } else {
-      // Assuming development environment
-      HOST = 'http://localhost:8080';
-    }
     setWait(true);
 
     try {

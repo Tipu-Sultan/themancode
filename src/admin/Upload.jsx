@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 
 const Upload = () => {
+  const HOST = process.env.REACT_APP_API_HOST
   const isLogin = localStorage.getItem('isLogin');
   const isUser = isLogin ? JSON.parse(isLogin) : null;
   const navigate = useNavigate();
@@ -35,12 +36,7 @@ const Upload = () => {
 
   const handleUpload = async (e) => {
     e.preventDefault();
-    let HOST = '';
-    if (process.env.NODE_ENV === 'production') {
-      HOST = 'https://mancode.onrender.com';
-    } else {
-      HOST = 'http://localhost:8080';
-    }
+
 
     setWait(true);
     setUploadProgress(0);
@@ -82,72 +78,72 @@ const Upload = () => {
 
   return (
     <Layout>
-    <Container maxW={'container.xl'} h={'100vh'} p={'16'}>
-      <VStack
-        color={'purple.500'}
-        h={'full'}
-        justifyContent={'center'}
-        spacing={8}
-      >
-        <AiOutlineCloudUpload size="10vmax" />
+      <Container maxW={'container.xl'} h={'100vh'} p={'16'}>
+        <VStack
+          color={'purple.500'}
+          h={'full'}
+          justifyContent={'center'}
+          spacing={8}
+        >
+          <AiOutlineCloudUpload size="10vmax" />
 
-        <form>
-          <VStack spacing={4}>
-            <Input
-              required
-              type={'file'}
-              onChange={handleFileChange}
-              css={{
-                '&::file-selector-button': {
-                  border: 'none',
-                  width: 'calc(100% + 36px)',
-                  height: '100%',
-                  marginLeft: '-18px',
-                  color: 'purple',
-                  backgroundColor: 'white',
-                  cursor: 'pointer',
-                },
-              }}
-            />
-            <Input
-              type="text"
-              placeholder="Title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-            <Textarea
-              placeholder="Description"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-            />
-            <Button
-              colorScheme={'purple'}
-              type={'submit'}
-              onClick={handleUpload}
-              width={['100%', '100%', '50%']}
-            >
-              {wait ? 'Please wait..' : 'Upload'}
-            </Button>
-          </VStack>
-          {uploadProgress >= 0 && (
-            <Progress
-              value={Number(uploadProgress)}
-              colorScheme="purple"
-              size="sm"
-              w="100%"
-              mt={4}
-              borderRadius={'md'}
-              textAlign="center"
-              display="flex"
-              alignItems="center"
-              height={3}
-            >
-              {uploadProgress}%
-            </Progress>
-          )}
-        </form>
-      </VStack>
-    </Container>
+          <form>
+            <VStack spacing={4}>
+              <Input
+                required
+                type={'file'}
+                onChange={handleFileChange}
+                css={{
+                  '&::file-selector-button': {
+                    border: 'none',
+                    width: 'calc(100% + 36px)',
+                    height: '100%',
+                    marginLeft: '-18px',
+                    color: 'purple',
+                    backgroundColor: 'white',
+                    cursor: 'pointer',
+                  },
+                }}
+              />
+              <Input
+                type="text"
+                placeholder="Title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+              />
+              <Textarea
+                placeholder="Description"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+              <Button
+                colorScheme={'purple'}
+                type={'submit'}
+                onClick={handleUpload}
+                width={['100%', '100%', '50%']}
+              >
+                {wait ? 'Please wait..' : 'Upload'}
+              </Button>
+            </VStack>
+            {uploadProgress >= 0 && (
+              <Progress
+                value={Number(uploadProgress)}
+                colorScheme="purple"
+                size="sm"
+                w="100%"
+                mt={4}
+                borderRadius={'md'}
+                textAlign="center"
+                display="flex"
+                alignItems="center"
+                height={3}
+              >
+                {uploadProgress}%
+              </Progress>
+            )}
+          </form>
+        </VStack>
+      </Container>
     </Layout>
   );
 };

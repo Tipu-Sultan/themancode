@@ -28,6 +28,7 @@ const Signup = () => {
   const [check, setCheck] = useState(false);
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const navigate = useNavigate();
+  const HOST = process.env.REACT_APP_API_HOST
 
   const handleInput = e => {
     const { name, value } = e.target;
@@ -56,13 +57,7 @@ const Signup = () => {
 
   const SubmitUser = async e => {
     e.preventDefault();
-    let HOST = '';
-    if (process.env.NODE_ENV === 'production') {
-      HOST = 'https://mancode.onrender.com';
-    } else {
-      // Assuming development environment
-      HOST = 'http://localhost:8080';
-    }
+
     setWait(true);
     try {
       const response = await axios.post(`${HOST}/api/auth/signup`, data);
