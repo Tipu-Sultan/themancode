@@ -54,7 +54,7 @@ export default function WithAction() {
     // Fetch user logs from your MongoDB API endpoint
     const fetchData = async () => {
       try {
-        const response = await axios.get(`https://mancode.onrender.com/saveinfo`);
+        const response = await axios.post(`${process.env.REACT_APP_API_HOST}/api/userlogs`);
         console.log(response.data)
       } catch (error) {
         console.error("Error fetching data:", error);
