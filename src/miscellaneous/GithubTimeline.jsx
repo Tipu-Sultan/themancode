@@ -9,7 +9,6 @@ const GitHubTimeline = () => {
   const username = "Tipu-Sultan"; 
   const repoName = "themancode";
   const accessToken = process.env.REACT_APP_GIT_KEY; 
-  console.log(accessToken);
   useEffect(() => {
     axios
       .get(

@@ -44,11 +44,9 @@ const UrlShortener = () => {
   };
 
   const handleCopyClick = () => {
-    // Use the Clipboard API to copy the shortened URL to the clipboard
     navigator.clipboard.writeText(shortenedUrl);
     setCopied(true);
-
-    // Reset the "Copied" state after 3 seconds
+    
     setTimeout(() => {
       setCopied(false);
     }, 3000);
