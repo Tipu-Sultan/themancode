@@ -54,8 +54,8 @@ export default function WithAction() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.post(`${process.env.REACT_APP_API_HOST}/api/userlogs`);
-        console.log(response.data)
+        await axios.post(`${process.env.REACT_APP_API_HOST}/api/userlogs`);
+
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -65,7 +65,7 @@ export default function WithAction() {
   }, []);
   const location = useLocation();
   const currentPath = location.pathname;
-  if(currentPath!=='/login' || currentPath[0]!=='/activation'){
+  if(currentPath!=='/login' && currentPath.split('/')[1]!=='activation'){
     localStorage.setItem("currentPath",currentPath);
   }
   const navigate = useNavigate()
@@ -74,6 +74,7 @@ export default function WithAction() {
   const handleLogout = () => {
     localStorage.removeItem("isLogin"); // Remove the isLogin from local storage
     localStorage.removeItem("token");
+    localStorage.removeItem("uuid");
     // Redirect or update application state accordingly
     setTimeout(() => navigate('/', 100));
   };

@@ -20,7 +20,6 @@ const GitHubTimeline = () => {
         }
       )
       .then((response) => {
-        console.log(response.data);
         setCommits(response.data);
       })
       .catch((error) => {
