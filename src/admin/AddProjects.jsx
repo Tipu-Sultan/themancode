@@ -16,7 +16,8 @@ const AddProjects = () => {
     const { id } = useParams();
     const [projectData, setProjectData] = useState({
         project_name: '',
-        link: '',
+        hostedUrl: '',
+        githubUrl: '',
         banner: '',
         tools: '',
     });
@@ -89,13 +90,22 @@ const AddProjects = () => {
                         />
 
                         <Input
-                            placeholder={'Add Project link'}
+                            placeholder={'Add Project hostedUrl'}
                             type={'text'}
                             required
                             focusBorderColor={'purple.500'}
                             onChange={handleInput}
-                            value={projectData.link}
-                            name="link"
+                            value={projectData.hostedUrl}
+                            name="hostedUrl"
+                        />
+                        <Input
+                            placeholder={'Add Project githubUrl'}
+                            type={'text'}
+                            required
+                            focusBorderColor={'purple.500'}
+                            onChange={handleInput}
+                            value={projectData.githubUrl}
+                            name="githubUrl"
                         />
 
                         <Input

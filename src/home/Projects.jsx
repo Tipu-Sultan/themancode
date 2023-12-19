@@ -13,8 +13,12 @@ import {
   useColorModeValue,
   Spinner,
   Badge,
+  Tooltip
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
+import { FaGithub } from "react-icons/fa";
+import { IoIosSend } from "react-icons/io";
+
 const Projects = () => {
   const [projects, setProjects] = useState([]);
   const [wait, setWait] = useState(false);
@@ -89,45 +93,55 @@ const Projects = () => {
             >
               {projects.map((project, index) => (
                 <GridItem key={index}>
-                  <Link to={project.link} target="_blank">
-                    <Box
-                      maxW={"auto"}
-                      w={"full"}
-                      bgColor={colorMode2}
-                      boxShadow={"lg"}
-                      rounded={"md"}
-                      overflow={"hidden"}
-                      h={"full"}
-                    >
-                      <Image
-                        h={"120px"}
-                        w={"full"}
-                        src={project.banner}
-                        objectFit="cover"
-                        alt="#"
-                      />
-                      <Box p={3} h="100%">
-                        <Text fontWeight={"bold"} mb={2} color={colorMode1}>
-                          {project.project_name}
-                        </Text>
+                  <Box
+                    maxW={"auto"}
+                    w={"full"}
+                    bgColor={colorMode2}
+                    boxShadow={"lg"}
+                    rounded={"md"}
+                    overflow={"hidden"}
+                    h={"full"}
+                    position="relative"
+                    _hover={{ ".icons": { opacity: 1, top: "35%", } }}
+                  >
+                    <Image h={"120px"} w={"full"} src={project.banner} objectFit="cover" alt="#" />
 
-                        <Stack direction={"row"} spacing={2} flexWrap="wrap">
-                          {project.tools.split(',').map((tool, toolIndex) => (
-                            <Badge
-                              key={toolIndex}
-                              bg={'teal'}
-                              fontSize="0.8em"
-                              borderRadius="full"
-                              px={2}
-                              mb={2}
-                            >
-                              {tool.trim()}
-                            </Badge>
-                          ))}
-                        </Stack>
-                      </Box>
+                    <Flex
+                      className="icons"
+                      position="absolute"
+                      left="10px"
+                      opacity={0}
+                      transition="opacity 0.3s, top 0.3s"
+                      color={colorMode2 === 'dark' ? 'white' : 'black'}
+                      fontSize="1.6em"
+                    >
+                      <Tooltip label="Visit Hosted URL">
+                        <Link to={project.hostedUrl} target="_blank">
+                          <IoIosSend />
+                        </Link>
+                      </Tooltip>
+
+                      <Tooltip label="Visit GitHub URL" ml={2}>
+                        <Link to={project.githubUrl} target="_blank">
+                          <FaGithub style={{ marginLeft: '10px' }} />
+                        </Link>
+                      </Tooltip>
+                    </Flex>
+
+                    <Box p={3} h="100%">
+                      <Text fontWeight={"bold"} mb={2} color={colorMode1}>
+                        {project.project_name}
+                      </Text>
+
+                      <Stack direction={"row"} spacing={2} flexWrap="wrap">
+                        {project.tools.split(',').map((tool, toolIndex) => (
+                          <Badge key={toolIndex} bg={'teal'} fontSize="0.8em" borderRadius="full" px={2} mb={2}>
+                            {tool.trim()}
+                          </Badge>
+                        ))}
+                      </Stack>
                     </Box>
-                  </Link>
+                  </Box>
                 </GridItem>
               ))}
             </Grid>
