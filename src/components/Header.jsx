@@ -65,7 +65,7 @@ export default function WithAction() {
   }, []);
   const location = useLocation();
   const currentPath = location.pathname;
-  if(currentPath!=='/login' || currentPath!=='/activation/:token'){
+  if(currentPath!=='/login' || currentPath[0]!=='/activation'){
     localStorage.setItem("currentPath",currentPath);
   }
   const navigate = useNavigate()
