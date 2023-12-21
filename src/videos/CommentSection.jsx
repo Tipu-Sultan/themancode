@@ -22,6 +22,7 @@ const CommentSection = ({
   handleReplyDelete,
   setOpenReplyTextareaForComment,
   openReplyTextareaForComment,
+  wait,
 }) => {
   const useColor = useColorModeValue("gray.800", "gray.100");
 
@@ -41,6 +42,7 @@ const CommentSection = ({
         colorScheme="purple"
         size="sm"
         onClick={handleCommentSubmit}
+        isLoading={wait}
       >
         Comment
       </Button>
@@ -57,6 +59,7 @@ const CommentSection = ({
             handleCommentDelete={handleCommentDelete}
             replies={replies}
             setReplies={setReplies}
+            wait={wait}
             handleReplySubmit={handleReplySubmit}
             handleReplyDelete={handleReplyDelete}
             setOpenReplyTextareaForComment={setOpenReplyTextareaForComment}

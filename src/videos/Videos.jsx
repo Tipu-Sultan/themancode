@@ -17,6 +17,7 @@ const Videos = () => {
   const isLogin = localStorage.getItem("isLogin");
   const isUser = isLogin ? JSON.parse(isLogin) : null;
   const [videos, setVideos] = useState([]);
+  const [wait, setwait] = useState(false)
   const [currentVideo, setCurrentVideo] = useState({
     title: "",
     filename: "",
@@ -112,7 +113,7 @@ const Videos = () => {
         console.error("Current video is not properly initialized");
         return;
       }
-
+      setwait(true);
       const response = await fetch(
         `${HOST}/api/videos/comments/${currentVideo._id}`,
         {
@@ -132,16 +133,20 @@ const Videos = () => {
         const data = await response.json();
         setNewComment("");
         socket.emit("newComment", data.comment);
+        setwait(false);
       } else {
         console.error("Failed to add comment");
+        setwait(false);
       }
     } catch (error) {
       console.error("Error submitting comment:", error);
+      setwait(false);
     }
   };
 
   const handleReplySubmit = async (commentId) => {
     try {
+      setwait(true);
       const response = await fetch(
         `${HOST}/api/videos/comments/${currentVideo._id}/${commentId}`,
         {
@@ -170,10 +175,13 @@ const Videos = () => {
           ...prevReplies,
           [commentId]: "", // Clearing the text area for the specific comment
         }));
+        setwait(false);
       } else {
         console.error("Failed to add reply:", await response.json());
+        setwait(false);
       }
     } catch (error) {
+      setwait(false);
       console.error("Error submitting reply:", error);
     }
   };
@@ -354,6 +362,7 @@ const Videos = () => {
                   handleCommentDelete={handleCommentDelete}
                   replies={replies}
                   setReplies={setReplies}
+                  wait={wait}
                   handleReplySubmit={handleReplySubmit}
                   handleReplyDelete={handleReplyDelete}
                   setOpenReplyTextareaForComment={setOpenReplyTextareaForComment}

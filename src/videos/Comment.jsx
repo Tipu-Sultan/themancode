@@ -26,6 +26,7 @@ const Comment = ({
   setOpenReplyTextareaForComment,
   openReplyTextareaForComment,
   isUser,
+  wait
 }) => {
   const formattedDate = (dateString) => {
     const options = {
@@ -125,6 +126,7 @@ const Comment = ({
             colorScheme="green"
             size="sm"
             onClick={() => handleReplySubmit(comment._id)}
+            isLoading={wait}
           >
             Reply
           </Button>
@@ -139,7 +141,7 @@ const Comment = ({
         size="sm"
         onClick={() =>
           setOpenReplyTextareaForComment(
-            openReplyTextareaForComment === comment._id ? null : comment._id
+            openReplyTextareaForComment === comment._id ? setReplies("") : comment._id
           )
         }
       >
