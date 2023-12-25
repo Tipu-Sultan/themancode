@@ -13,6 +13,7 @@
     "@testing-library/user-event": "^14.4.3",
     "@tinymce/tinymce-react": "^4.3.0",
     "@vercel/analytics": "^1.1.1",
+    "@vercel/speed-insights": "^1.0.2",
     "axios": "^1.5.0",
     "chart.js": "^4.4.0",
     "clarifai-nodejs-grpc": "^9.8.2",
