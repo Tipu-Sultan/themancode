@@ -3,7 +3,6 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { Helmet } from "react-helmet";
 import { Analytics } from '@vercel/analytics/react';
-import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const Layout = ({ children, title, description, keywords, author }) => {
     return (
@@ -20,7 +19,6 @@ const Layout = ({ children, title, description, keywords, author }) => {
                 <main style={{ minHeight: "70vh" }}>
                     {children}
                     <Analytics />
-                    <SpeedInsights/>
                 </main>
 
             </div>
