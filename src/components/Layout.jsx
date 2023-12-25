@@ -2,6 +2,8 @@ import React from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import { Helmet } from "react-helmet";
+import { Analytics } from '@vercel/analytics/react';
+
 const Layout = ({ children, title, description, keywords, author }) => {
     return (
         <div style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
@@ -16,6 +18,7 @@ const Layout = ({ children, title, description, keywords, author }) => {
                 <Header />
                 <main style={{ minHeight: "70vh" }}>
                     {children}
+                    <Analytics />
                 </main>
 
             </div>
