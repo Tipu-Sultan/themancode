@@ -156,7 +156,7 @@ import {
                       }}
                       onClick={() => deleteVideos(item._id)}
                     >
-                      Delete Code
+                      Delete Video
                     </Button>
                   )}
                 </Box>

@@ -53,7 +53,7 @@ const Upload = () => {
     formData.append('description', description);
 
     try {
-      const response = await axios.post(`${HOST}/api/upload`, formData, {
+      const response = await axios.post(`https://mancode.onrender.com/api/upload`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
