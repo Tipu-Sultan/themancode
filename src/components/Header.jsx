@@ -25,7 +25,7 @@ import {
   SunIcon,
   ChevronDownIcon,
 } from "@chakra-ui/icons";
-
+import SearchWithMicInput from '../miscellaneous/SearchMic'
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import {useEffect} from 'react'
 import axios from "axios";
@@ -157,9 +157,8 @@ export default function WithAction() {
             </HStack>
           </HStack>
 
-          {/* ... (rest of the code remains the same) */}
-
           <Flex alignItems={"center"}>
+          <SearchWithMicInput isMobile={isMobile}/>
             {isMobile ? null : isLogin ? (
               <>
                 <Button colorScheme="purple" right={"4"}>
