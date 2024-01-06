@@ -36,6 +36,7 @@ import UrlShortener from "./miscellaneous/ShortUrl";
 const App = () => {
   const isLogin = localStorage.getItem("isLogin");
   const isUser = isLogin ? JSON.parse(isLogin) : null;
+  const checkUser = isUser ? isUser.access === 'admin' : false;
   return (
     <Router>
       <ToastContainer />
@@ -51,16 +52,16 @@ const App = () => {
         <Route path="/activation/:token" element={<Activation />} />
 
         {
-        isUser.access === 'admin'&&
-        <>
-        <Route path="/upload" element={<Upload />} />
-        <Route path="/addproject" element={<AddProjects />} />
-        <Route path="/addproject/:id" element={<AddProjects />} />
-        <Route path="/myvideos" element={<MyVideos />} />
-        <Route path="/myassets" element={<MyAssets />} />
-        </>
+          checkUser &&
+          <>
+            <Route path="/upload" element={<Upload />} />
+            <Route path="/addproject" element={<AddProjects />} />
+            <Route path="/addproject/:id" element={<AddProjects />} />
+            <Route path="/myvideos" element={<MyVideos />} />
+            <Route path="/myassets" element={<MyAssets />} />
+          </>
         }
-        
+
         <Route path="/coins" element={<Coins />} />
         <Route path="/exchanges" element={<Exchanges />} />
         <Route path="/coin/:id" element={<CoinDetails />} />
