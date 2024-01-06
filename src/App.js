@@ -51,7 +51,7 @@ const App = () => {
         <Route path="/activation/:token" element={<Activation />} />
 
         {
-        isUser&&
+        isUser.access === 'admin'&&
         <>
         <Route path="/upload" element={<Upload />} />
         <Route path="/addproject" element={<AddProjects />} />
