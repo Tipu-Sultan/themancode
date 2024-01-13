@@ -104,7 +104,7 @@ export default function CallToActionWithAnnotation() {
     }, typewriterInterval);
 
     return () => clearInterval(interval);
-  }, [currentSentenceIndex, currentWordIndex]);
+  }, [currentSentenceIndex, currentWordIndex, sentences]);
 
   return (
     <>

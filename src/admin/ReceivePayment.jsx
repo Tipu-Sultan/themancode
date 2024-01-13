@@ -34,8 +34,8 @@ const ReceivePayment = () => {
                 <Thead>
                     <Tr>
                         <Th>User ID</Th>
-                        <Th>Transaction ID</Th>
                         <Th>UPI ID</Th>
+                        <Th>Transaction ID</Th>
                         <Th>Amount</Th>
                         <Th>Timestamp</Th>
                         <Th>Action</Th>

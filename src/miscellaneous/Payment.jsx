@@ -20,15 +20,12 @@ const DonationComponent = () => {
             const expirationTimestamp = currentTimeInSeconds + 1 * 10;
 
             if (expirationTimestamp) {
-                const response = await axios.post(`${HOST}/api/payment/save`,{
+                await axios.post(`${HOST}/api/payment/save`,{
                     user_id:'themancode',
                     tid:currentTimeInSeconds,
                     upiId:upiId,
                     amount:150,
                 })
-                if(response.ok){
-                    console.log('done')
-                }
                 const timeRemaining = expirationTimestamp - currentTimeInSeconds;
                 setTimer(Math.max(0, timeRemaining));
                 setBtnEnable(true);
