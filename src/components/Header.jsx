@@ -155,10 +155,9 @@ export default function WithAction() {
                 </MenuList>
               </Menu>
             </HStack>
+            <SearchWithMicInput/>
           </HStack>
-
           <Flex alignItems={"center"}>
-          <SearchWithMicInput isMobile={isMobile}/>
             {isMobile ? null : isLogin ? (
               <>
                 <Button colorScheme="purple" right={"4"}>
