@@ -4,6 +4,7 @@ import MyProjects from './MyProjects';
 import MyVideos from './MyVideos'; 
 import Logs from './Logs';
 import Layout from '../components/Layout';
+import ReceivePayment from './ReceivePayment';
 
 
 const MyAssets = () => {
@@ -16,6 +17,7 @@ const MyAssets = () => {
           <Tab>Projects</Tab>
           <Tab>Videos</Tab>
           <Tab>Logs</Tab>
+          <Tab>Payments</Tab>
         </TabList>
 
         <TabPanels>
@@ -28,6 +30,9 @@ const MyAssets = () => {
 
           <TabPanel>
             <Logs />
+          </TabPanel>
+          <TabPanel>
+            <ReceivePayment />
           </TabPanel>
         </TabPanels>
       </Tabs>

@@ -3,9 +3,11 @@ import { Box, Button, Image, Radio, RadioGroup, Stack, Text } from '@chakra-ui/r
 import qrcode from 'qrcode';
 import { createCanvas } from 'canvas';
 import Layout from '../components/Layout';
+import axios from 'axios';
 
 
 const DonationComponent = () => {
+    const HOST = process.env.REACT_APP_API_HOST;
     const [qrCodeData, setQrCodeData] = useState(null);
     const [timer, setTimer] = useState(0);
     const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
@@ -15,9 +17,18 @@ const DonationComponent = () => {
     const generateQrCode = async (upiId) => {
         try {
             const currentTimeInSeconds = Math.floor(Date.now() / 1000);
-            const expirationTimestamp = currentTimeInSeconds + 5 * 60;
+            const expirationTimestamp = currentTimeInSeconds + 1 * 10;
 
             if (expirationTimestamp) {
+                const response = await axios.post(`${HOST}/api/payment/save`,{
+                    user_id:'themancode',
+                    tid:currentTimeInSeconds,
+                    upiId:upiId,
+                    amount:150,
+                })
+                if(response.ok){
+                    console.log('done')
+                }
                 const timeRemaining = expirationTimestamp - currentTimeInSeconds;
                 setTimer(Math.max(0, timeRemaining));
                 setBtnEnable(true);
