@@ -9,6 +9,7 @@ import {
   HStack,
   Center,
   useMediaQuery,
+  Icon,
 } from '@chakra-ui/react';
 import mylogo from '../assets/myself.png';
 import { useEffect, useState } from 'react';
@@ -19,8 +20,10 @@ import {
   FaInstagram,
   FaEnvelope,
   FaRocket,
-  FaFile
+  FaFile,
+  FaHeart
 } from 'react-icons/fa';
+import { Link as RouterLink } from 'react-router-dom';
 
 export default function CallToActionWithAnnotation() {
   const [isMobile] = useMediaQuery("(max-width: 794px)");
@@ -111,12 +114,20 @@ export default function CallToActionWithAnnotation() {
           spacing={{ base: '8', md: '14', lg: '15', xl: '40' }}
           py={{ base: 100, md: 20, lg: 36 }}
         >
-          {/* Left side: Heading and Text */}
           <Box
             flex={{ base: '1', md: '1', lg: '1' }}
             textAlign={{ base: 'center', md: 'left' }}
             mb={{ base: 8, md: 0 }}
           >
+            <Button
+              colorScheme="teal"
+              size="md"
+              leftIcon={<Icon as={FaHeart} color={'red'}/>}
+              _hover={{ bg: 'yellow.400' }}
+              as={RouterLink} to="/donateforme"
+            >
+              Donate for Me
+            </Button>
             <Heading
               fontWeight={600}
               fontSize={{ base: '2xl', sm: '4xl', md: '5xl' }}
