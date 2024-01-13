@@ -17,7 +17,7 @@ const DonationComponent = () => {
     const generateQrCode = async (upiId) => {
         try {
             const currentTimeInSeconds = Math.floor(Date.now() / 1000);
-            const expirationTimestamp = currentTimeInSeconds + 1 * 10;
+            const expirationTimestamp = currentTimeInSeconds + 5 * 60;
 
             if (expirationTimestamp) {
                 await axios.post(`${HOST}/api/payment/save`,{
