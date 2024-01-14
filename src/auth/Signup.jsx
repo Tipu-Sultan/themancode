@@ -76,7 +76,7 @@ const Signup = () => {
   };
 
   return (
-    <Layout title={'Signup'}>
+    <Layout title={'Signup'} description={'make a free account to access more features'}>
     <Container
       maxW={'container.xl'}
       h={'100vh'}

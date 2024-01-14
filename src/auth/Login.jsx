@@ -74,7 +74,7 @@ const Login = () => {
   };
 
   return (
-    <Layout title={'Login'}>
+    <Layout title={'Login'} description={'login to access more features'}>
       <Container maxW={'container.xl'} h={'100vh'} p={'16'}>
         <form onSubmit={AuthenticateUser}>
           <VStack

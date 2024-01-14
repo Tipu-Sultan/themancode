@@ -209,6 +209,7 @@ export default function WithAction() {
                   src={
                     "https://icon-library.com/images/cool-discord-icon/cool-discord-icon-6.jpg"
                   }
+                  alt="user-avatar"
                 />
               </MenuButton>
               {isUser&&

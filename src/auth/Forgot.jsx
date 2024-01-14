@@ -42,7 +42,7 @@ const Forgot = () => {
   };
 
   return (
-    <Layout title={'forgot-password'}>
+    <Layout title={'forgetpassword'}>
     <Container maxW={'container.xl'} h={'100vh'} p={'16'}>
       <form onSubmit={handleForgotPassword}>
         <VStack
