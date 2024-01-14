@@ -198,7 +198,6 @@ export default function WithAction() {
 
             <Menu>
               <MenuButton
-                as={Button}
                 rounded={"full"}
                 variant={"link"}
                 cursor={"pointer"}

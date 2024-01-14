@@ -8,7 +8,21 @@
     <priority>1.0</priority>
   </url>
 
-  <!-- Example Pages -->
+  <!-- Login page -->
+  <url>
+    <loc>https://themancode.vercel.app/login</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Signup -->
+  <url>
+    <loc>https://themancode.vercel.app/signup</loc>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Video Pages -->
   <url>
     <loc>https://themancode.vercel.app/videos</loc>
     <changefreq>weekly</changefreq>
