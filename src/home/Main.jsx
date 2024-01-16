@@ -10,6 +10,7 @@ import {
   Center,
   useMediaQuery,
   Icon,
+  useColorModeValue,
 } from '@chakra-ui/react';
 import mylogo from '../assets/myself.png';
 import { useEffect, useState } from 'react';
@@ -27,6 +28,7 @@ import { Link as RouterLink } from 'react-router-dom';
 
 export default function CallToActionWithAnnotation() {
   const [isMobile] = useMediaQuery("(max-width: 794px)");
+  const Color = useColorModeValue("gray.900", "gray.100")
 
   const socialButtons = [
     {
@@ -34,7 +36,7 @@ export default function CallToActionWithAnnotation() {
       url: 'https://drive.google.com/file/d/1AruNdk4MNVNKgDRO_hdKr381K5a8ZcKs/view?usp=sharing',
       icon: FaFile,
       style: {
-        color: 'rgba(var(--text-color))',
+        color:'#fff',
         border: '2px double transparent',
         backgroundImage: 'linear-gradient(rgb(13, 14, 33), rgb(13, 14, 33)), radial-gradient(circle at left top, rgb(1, 110, 218), rgb(217, 0, 192))',
         backgroundOrigin: 'border-box',
@@ -46,45 +48,41 @@ export default function CallToActionWithAnnotation() {
       text: 'GitHub',
       url: 'https://github.com/Tipu-Sultan',
       icon: FaGithub,
-      color: '#fff',
+      color: Color,
     },
     {
       text: 'LinkedIn',
       url: 'https://www.linkedin.com/in/tipu-sultan-47b4221b4/',
       icon: FaLinkedin,
-      color: '#0e76a8', // Add the color for LinkedIn
+      color: '#0e76a8', 
     },
     {
       text: 'Vercel',
       url: 'https://vercel.com/tipu-sultan',
       icon: FaRocket,
-      color: '#000000', // Add the color for Vercel
+      color: '#000000', 
     },
     {
       text: 'Instagram',
       url: 'https://www.instagram.com/pathan__sultan/',
       icon: FaInstagram,
-      color: '#bc2a8d', // Add the color for Instagram
+      color: '#bc2a8d', 
     },
     {
       text: 'Gmail',
       url: 'mailto:teepukhan729@gmail.com',
       icon: FaEnvelope,
-      color: '#dd4b39', // Add the color for Gmail
+      color: '#dd4b39', 
     },
   ];
 
-  const sentences = [
-    "I'm a MERN Dev.",
-    "I'm a web Dev.",
-    'Freelancer.',
-  ];
+  const sentences = ["I'm a MERN Dev.","I'm a web Dev.","Freelancer."];
 
   const [currentSentenceIndex, setCurrentSentenceIndex] = useState(0);
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
   const [currentText, setCurrentText] = useState('');
 
-  const typewriterInterval = 200; // Interval in milliseconds
+  const typewriterInterval = 200; 
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -104,7 +102,7 @@ export default function CallToActionWithAnnotation() {
     }, typewriterInterval);
 
     return () => clearInterval(interval);
-  }, [currentSentenceIndex, currentWordIndex, sentences]);
+  }, [currentSentenceIndex, currentWordIndex]);
 
   return (
     <>
@@ -126,7 +124,7 @@ export default function CallToActionWithAnnotation() {
               _hover={{ bg: 'yellow.400' }}
               as={RouterLink} to="/donateforme"
             >
-              Donate for Me
+              Donate for code
             </Button>
             <Heading
               fontWeight={600}
@@ -173,7 +171,6 @@ export default function CallToActionWithAnnotation() {
             </Text>
           </Box>
 
-          {/* Right side: Image */}
           <Box
             flex={{ base: '1', md: '1', lg: '1' }}
             textAlign={{ base: 'center', md: 'right' }}

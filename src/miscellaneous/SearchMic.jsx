@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { FaMicrophone } from 'react-icons/fa';
 import clickSound from '../assets/mic-on.mp3';
 import completeSound from '../assets/mic-on.mp3';
+import { useColorModeValue } from '@chakra-ui/react';
 
 const SearchWithMicInput = () => {
   const recognition = useRef(null);
@@ -51,11 +52,11 @@ const SearchWithMicInput = () => {
 
     stopListening();
   };
-
+  const bgColor = useColorModeValue("gray.100", "gray.900")
 
   return (
     <>
-      <FaMicrophone size={25} onClick={handleMicClick} color={isListening ? 'red' : 'white'} />
+      <FaMicrophone style={{cursor:"pointer"}} size={25} onClick={handleMicClick} color={isListening ? 'red' : bgColor} />
     </>
   );
 };

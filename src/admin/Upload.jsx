@@ -5,6 +5,7 @@ import {
   VStack,
   Progress,
   Textarea,
+  Text,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import axios from 'axios';
@@ -29,9 +30,12 @@ const Upload = () => {
   const [description, setDescription] = useState('');
   const [wait, setWait] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
+  const [fileName, setFileName] = useState('');
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
+    const selectedFile = e.target.files[0];
+    setFile(selectedFile);
+    setFileName(selectedFile.name);
   };
 
   const handleUpload = async (e) => {
@@ -105,6 +109,7 @@ const Upload = () => {
                   },
                 }}
               />
+              {fileName && <Text>{fileName}</Text>}
               <Input
                 type="text"
                 placeholder="Title"

@@ -27,7 +27,7 @@ import {
 } from "@chakra-ui/icons";
 import SearchWithMicInput from '../miscellaneous/SearchMic'
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import {useEffect} from 'react'
+import { useEffect } from 'react'
 import axios from "axios";
 import logos from "../assets/mylogo.png";
 import "../App.css";
@@ -65,8 +65,8 @@ export default function WithAction() {
   }, []);
   const location = useLocation();
   const currentPath = location.pathname;
-  if(currentPath!=='/login' && currentPath.split('/')[1]!=='activation'){
-    localStorage.setItem("currentPath",currentPath);
+  if (currentPath !== '/login' && currentPath.split('/')[1] !== 'activation') {
+    localStorage.setItem("currentPath", currentPath);
   }
   const navigate = useNavigate()
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -90,6 +90,12 @@ export default function WithAction() {
     return location.pathname === url;
   };
 
+  const HOST = process.env.REACT_APP_API_HOST
+  const turnOffServices = async () => {
+    await axios.post(`${HOST}/api/auth/turnoff`, {
+      id: isUser?._id
+    })
+  }
   return (
     <>
       <Box
@@ -144,7 +150,7 @@ export default function WithAction() {
                   {dropdownLinks
                     .filter(
                       (link) =>
-                        !(link.text === "AddProject" || link.text === "MyAssets"  || link.text === "AddCode" || link.text === "AddVideo") ||
+                        !(link.text === "AddProject" || link.text === "MyAssets" || link.text === "AddCode" || link.text === "AddVideo") ||
                         isAdmin
                     )
                     .map((link, i) => (
@@ -155,7 +161,7 @@ export default function WithAction() {
                 </MenuList>
               </Menu>
             </HStack>
-            <SearchWithMicInput/>
+            <SearchWithMicInput />
           </HStack>
           <Flex alignItems={"center"}>
             {isMobile ? null : isLogin ? (
@@ -211,17 +217,22 @@ export default function WithAction() {
                   alt="user-avatar"
                 />
               </MenuButton>
-              {isUser&&
+              {isUser &&
                 <MenuList>
-                <MenuItem>
-                  <Link to={"/profile"}>Profile</Link>
-                </MenuItem>
-                <MenuItem>Setting</MenuItem>
-                <MenuDivider />
-                <MenuItem>
-                  <Link to={"/forgetpassword"}>Change Password</Link>
-                </MenuItem>
-              </MenuList>
+                  <MenuItem>
+                    <Link to={"/profile"}>Profile</Link>
+                  </MenuItem>
+                  <MenuItem><Link to={"/setting"}>Setting</Link></MenuItem>
+                  <MenuDivider />
+                  <MenuItem>
+                    <Link to={"/forgetpassword"}>Change Password</Link>
+                  </MenuItem>
+                  {isAdmin &&
+                    <MenuItem>
+                      <Button onClick={turnOffServices} >TurnOff</Button>
+                    </MenuItem>
+                  }
+                </MenuList>
               }
             </Menu>
           </Flex>
@@ -232,8 +243,8 @@ export default function WithAction() {
             <Stack as={"nav"} spacing={4}>
               {Links.filter(
                 (link) =>
-                !(link.text === "AddProject" || link.text === "MyAssets"  || link.text === "AddCode" || link.text === "AddVideo") ||
-                isAdmin
+                  !(link.text === "AddProject" || link.text === "MyAssets" || link.text === "AddCode" || link.text === "AddVideo") ||
+                  isAdmin
               ).map((link, i) => (
                 <Button
                   colorScheme="purple"
