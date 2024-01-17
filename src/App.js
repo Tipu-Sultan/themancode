@@ -38,7 +38,13 @@ import UnderMaintenance from "./miscellaneous/UnderMaintenance";
 const App = () => {
   const isLogin = localStorage.getItem("isLogin");
   const isUser = isLogin ? JSON.parse(isLogin) : null;
-  const checkUser = isUser ? isUser.access === 'admin' : false;
+
+  const checkAdmin = (isUser) => {
+    if (!isUser) {
+      return false;
+    }
+    return isUser && isUser.access.includes('admin');
+  };
   const underService = false;
   return (
     <Router>
@@ -58,7 +64,7 @@ const App = () => {
               <Route path="/activation/:token" element={<Activation />} />
 
               {
-                checkUser &&
+                checkAdmin(isUser) &&
                 <>
                   <Route path="/upload" element={<Upload />} />
                   <Route path="/addproject" element={<AddProjects />} />
@@ -67,7 +73,6 @@ const App = () => {
                   <Route path="/myassets" element={<MyAssets />} />
                 </>
               }
-
               <Route path="/coins" element={<Coins />} />
               <Route path="/exchanges" element={<Exchanges />} />
               <Route path="/coin/:id" element={<CoinDetails />} />

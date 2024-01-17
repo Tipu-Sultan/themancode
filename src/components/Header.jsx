@@ -83,7 +83,7 @@ export default function WithAction() {
   const isUser = isLogin ? JSON.parse(isLogin) : null;
   const isAdmin = isUser?.access === "admin";
   // Determine if the device is a mobile device
-  const [isMobile] = useMediaQuery("(max-width: 864px)");
+  const [isMobile] = useMediaQuery("(max-width: 766px)");
 
   // Function to determine if a link is active based on the current URL
   const isLinkActive = (url) => {
@@ -101,7 +101,7 @@ export default function WithAction() {
       <Box
         bg={useColorModeValue("gray.100", "gray.900")}
         px={4}
-        position="fixed"
+        position={isMobile ? 'static' : 'fixed'}
         top={0}
         width="100%"
         zIndex={999}
@@ -120,8 +120,8 @@ export default function WithAction() {
                 <Image
                   src={logos}
                   alt={"logo"}
-                  width={isMobile ? "150px" : "250px"}
-                  height={"42px"}
+                  width={isMobile ? "187px" : "250px"}
+                  height={isMobile ? "31px" : "42px"}
                 />
               </Link>
             </Box>
@@ -130,8 +130,10 @@ export default function WithAction() {
                 <Button
                   variant={isLinkActive(link.url) ? "outline" : "ghost"}
                   key={i}
+                  as={Link}
+                  to={link.url}
                 >
-                  <Link to={link.url}>{link.text}</Link>
+                  {link.text}
                 </Button>
               ))}
 
@@ -154,8 +156,8 @@ export default function WithAction() {
                         isAdmin
                     )
                     .map((link, i) => (
-                      <MenuItem key={i}>
-                        <Link to={link.url}>{link.text}</Link>
+                      <MenuItem key={i} as={Link} to={link.url}>
+                        {link.text}
                       </MenuItem>
                     ))}
                 </MenuList>
@@ -177,11 +179,12 @@ export default function WithAction() {
                   variant={"outline"}
                   right={"6"}
                   className="hideAuth"
+                  as={Link} to={'/signup'}
                 >
-                  <Link to={"/signup"}>Sign Up</Link>
+                  Sign Up
                 </Button>
-                <Button colorScheme="purple" right={"4"} className="hideAuth">
-                  <Link to={"/login"}>Log In</Link>
+                <Button colorScheme="purple" right={"4"} className="hideAuth" as={Link} to={'/login'} >
+                  Log In
                 </Button>
               </>
             )}
@@ -219,13 +222,15 @@ export default function WithAction() {
               </MenuButton>
               {isUser &&
                 <MenuList>
-                  <MenuItem>
-                    <Link to={"/profile"}>Profile</Link>
+                  <MenuItem as={Link} to={"/profile"}>
+                    Profile
                   </MenuItem>
-                  <MenuItem><Link to={"/setting"}>Setting</Link></MenuItem>
+                  <MenuItem as={Link} to={"/profile"}>
+                    Setting
+                  </MenuItem>
                   <MenuDivider />
-                  <MenuItem>
-                    <Link to={"/forgetpassword"}>Change Password</Link>
+                  <MenuItem as={Link} to={"/forgetpassword"}>
+                    Change Password
                   </MenuItem>
                   {isAdmin &&
                     <MenuItem>
@@ -251,8 +256,10 @@ export default function WithAction() {
                   variant={"ghost"}
                   key={i}
                   onClick={isOpen ? onClose : onOpen}
+                  as={Link}
+                  to={link.url}
                 >
-                  <Link to={link.url}>{link.text}</Link>
+                  {link.text}
                 </Button>
               ))}
 
@@ -268,16 +275,20 @@ export default function WithAction() {
                   <Button
                     colorScheme="purple"
                     onClick={isOpen ? onClose : onOpen}
+                    as={Link}
+                    to={'/login'}
                   >
-                    <Link to={"/login"}>Log In</Link>
+                    Log In
                   </Button>
 
                   <Button
                     colorScheme="purple"
                     variant={"outline"}
                     onClick={isOpen ? onClose : onOpen}
+                    as={Link}
+                    to={'/signup'}
                   >
-                    <Link to={"/signup"}>Sign Up</Link>
+                    Sign Up
                   </Button>
                 </>
               )}
