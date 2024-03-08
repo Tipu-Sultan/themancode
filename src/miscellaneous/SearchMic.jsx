@@ -22,13 +22,14 @@ const SearchWithMicInput = () => {
   const startListening = () => {
     recognition.current = new window.webkitSpeechRecognition();
     recognition.current.onresult = handleSpeechResult;
-    recognition.current.onend = () => completeSoundOff.play();
     recognition.current.start();
+    recognition.current.onend = stopListening;
     setIsListening(true);
   };
 
   const stopListening = () => {
     recognition.current.stop();
+    completeSoundOff.play();
     setIsListening(false);
   };
 
@@ -49,8 +50,9 @@ const SearchWithMicInput = () => {
       const googleSearchURL = `https://www.google.com/search?q=${encodeURIComponent(transcript)}`;
       window.open(googleSearchURL, '_blank');
     }
-
+    setIsListening(true);
     stopListening();
+
   };
   const bgColor = useColorModeValue("gray.100", "gray.900")
 
