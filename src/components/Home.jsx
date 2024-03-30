@@ -4,6 +4,8 @@ import IntroSection from '../home/Skills';
 import Projects from '../home/Projects';
 import LoadingBar from 'react-top-loading-bar';
 import GitHubTimeline from '../miscellaneous/GithubTimeline';
+import Location from '../miscellaneous/Location';
+
 import Layout from './Layout';
 
 const Home = () => {
@@ -33,6 +35,7 @@ const Home = () => {
     <div>
       <Layout title={'Home||Themancode'}>
         <LoadingBar color='#3decec' progress={progress} onLoaderFinished={() => setProgress(0)} />
+        <Location/>
         <Main/>
         <GitHubTimeline/>
         <Projects />

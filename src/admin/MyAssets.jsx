@@ -11,6 +11,7 @@ import MyProjects from "./MyProjects";
 import MyVideos from "./MyVideos";
 import Logs from "./Logs";
 import ReceivePayment from "./ReceivePayment";
+import Visitor from "./Visitor";
 import Layout from "../components/Layout";
 
 export default function MyAssets() {
@@ -28,6 +29,8 @@ export default function MyAssets() {
             <Tab>Videos</Tab>
             <Tab>Logs</Tab>
             <Tab>Payments</Tab>
+            <Tab>Visitors</Tab>
+
           </TabList>
 
           <TabPanels>
@@ -45,6 +48,10 @@ export default function MyAssets() {
 
             <TabPanel>
               <ReceivePayment />
+            </TabPanel>
+
+            <TabPanel>
+              <Visitor />
             </TabPanel>
           </TabPanels>
         </Tabs>
