@@ -97,9 +97,7 @@ const Videos = () => {
   };
 
   const handleShare = () => {
-    const videoLink = `https://storage.cloud.google.com/edunify/${encodeURIComponent(
-      currentVideo.filename
-    )}`;
+    const videoLink = currentVideo.public_url;
 
     copy(videoLink);
 
