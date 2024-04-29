@@ -205,22 +205,22 @@ export default function WithAction() {
               />
             )}
 
-            <Menu>
-              <MenuButton
-                rounded={"full"}
-                variant={"link"}
-                cursor={"pointer"}
-                minW={0}
-              >
-                <Avatar
-                  size={"sm"}
-                  src={
-                    "https://icon-library.com/images/cool-discord-icon/cool-discord-icon-6.jpg"
-                  }
-                  alt="user-avatar"
-                />
-              </MenuButton>
-              {isUser &&
+            {isUser &&
+              <Menu>
+                <MenuButton
+                  rounded={"full"}
+                  variant={"link"}
+                  cursor={"pointer"}
+                  minW={0}
+                >
+                  <Avatar
+                    size={"sm"}
+                    src={
+                      "https://icon-library.com/images/cool-discord-icon/cool-discord-icon-6.jpg"
+                    }
+                    alt="user-avatar"
+                  />
+                </MenuButton>
                 <MenuList>
                   <MenuItem as={Link} to={"/profile"}>
                     Profile
@@ -238,8 +238,8 @@ export default function WithAction() {
                     </MenuItem>
                   }
                 </MenuList>
-              }
-            </Menu>
+              </Menu>
+            }
           </Flex>
         </Flex>
 
