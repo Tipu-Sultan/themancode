@@ -160,14 +160,18 @@ export default function CallToActionWithAnnotation() {
               >
                 I have
               </span>{' '}
-              extensive knowledge in web development and an impressive track record of building various minor and major projects,
-              including an e-commerce website, an online voting portal, participation in iulhackathon2022, a chatroom application, and a
-              Netflix clone. I have also tested two Android apps, demonstrating my adaptability across platforms. My skill set encompasses
-              MERN JS, HTML, CSS, JavaScript, Bootstrap, Tailwind CSS, GitHub, MongoDB, and MySQL. I am also well-versed in JAVA with DSA
-              and OOPS. and my hobbies are Coding, reading, and playing cricket, which further fuel my passion for continuous learning and
-              well-rounded development as a software developer.
-
-
+                extensive knowledge in web development, with a notable
+                portfolio showcasing projects such as a social media web app (Peopulse),
+                e-commerce platform, Netflix clone, video subtitles web app, URL
+                shortener web app, portfolio website, and PHP-based e-commerce and
+                car rental systems. Additionally, I have participated in iulhackathon2022,
+                demonstrating my adaptability across platforms. My skill set includes
+                proficiency in MERN stack (MongoDB, Express.js, React.js, Node.js),
+                MySQL, JavaScript, PHP, intermediate Java with Data Structures and
+                Object-Oriented Programming, HTML, CSS, Tailwind CSS, Bootstrap,
+                GitHub, and Vercel. Outside of work, I enjoy coding, reading, and playing
+                cricket, which further fuel my passion for continuous learning and wellrounded
+                development as a software developer.
             </Text>
           </Box>
 
