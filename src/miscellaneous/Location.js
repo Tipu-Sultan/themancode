@@ -21,7 +21,7 @@ const Location = () => {
         fetchData();
     }, []);
 
-    return <div>Getting user location...</div>;
+    return <div></div>;
 };
 
 
