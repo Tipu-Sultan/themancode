@@ -92,7 +92,7 @@ const Projects = () => {
               gap={{ base: 4, md: 6 }}
             >
               {projects
-                .sort((a, b) => a.project_name.localeCompare(b.project_name))
+                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                 .map((project, index) => (
                   <GridItem key={index}>
                     <Box
