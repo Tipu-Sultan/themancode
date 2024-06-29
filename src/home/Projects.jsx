@@ -91,59 +91,62 @@ const Projects = () => {
               templateColumns="repeat(auto-fill, minmax(250px, 1fr))"
               gap={{ base: 4, md: 6 }}
             >
-              {projects.map((project, index) => (
-                <GridItem key={index}>
-                  <Box
-                    maxW={"auto"}
-                    w={"full"}
-                    bgColor={colorMode2}
-                    boxShadow={"lg"}
-                    rounded={"md"}
-                    overflow={"hidden"}
-                    h={"full"}
-                    position="relative"
-                    _hover={{ ".icons": { opacity: 1, top: "35%", } }}
-                  >
-                    <Image h={"120px"} w={"full"} src={project.banner} objectFit="cover" alt="#" />
-
-                    <Flex
-                      className="icons"
-                      position="absolute"
-                      left="10px"
-                      opacity={0}
-                      transition="opacity 0.3s, top 0.3s"
-                      color={colorMode2 === 'dark' ? 'white' : 'black'}
-                      fontSize="1.6em"
+              {projects
+                .sort((a, b) => a.project_name.localeCompare(b.project_name))
+                .map((project, index) => (
+                  <GridItem key={index}>
+                    <Box
+                      maxW={"auto"}
+                      w={"full"}
+                      bgColor={colorMode2}
+                      boxShadow={"lg"}
+                      rounded={"md"}
+                      overflow={"hidden"}
+                      h={"full"}
+                      position="relative"
+                      _hover={{ ".icons": { opacity: 1, top: "35%", } }}
                     >
-                      <Tooltip label="Visit Hosted URL">
-                        <Link to={project.hostedUrl} target="_blank">
-                          <IoIosSend />
-                        </Link>
-                      </Tooltip>
+                      <Image h={"120px"} w={"full"} src={project.banner} objectFit="cover" alt="#" />
 
-                      <Tooltip label="Visit GitHub URL" ml={2}>
-                        <Link to={project.githubUrl} target="_blank">
-                          <FaGithub style={{ marginLeft: '10px' }} />
-                        </Link>
-                      </Tooltip>
-                    </Flex>
+                      <Flex
+                        className="icons"
+                        position="absolute"
+                        left="10px"
+                        opacity={0}
+                        transition="opacity 0.3s, top 0.3s"
+                        color={colorMode2 === 'dark' ? 'white' : 'black'}
+                        fontSize="1.6em"
+                      >
+                        <Tooltip label="Visit Hosted URL">
+                          <Link to={project.hostedUrl} target="_blank">
+                            <IoIosSend />
+                          </Link>
+                        </Tooltip>
 
-                    <Box p={3} h="100%">
-                      <Text fontWeight={"bold"} mb={2} color={colorMode1}>
-                        {project.project_name}
-                      </Text>
+                        <Tooltip label="Visit GitHub URL" ml={2}>
+                          <Link to={project.githubUrl} target="_blank">
+                            <FaGithub style={{ marginLeft: '10px' }} />
+                          </Link>
+                        </Tooltip>
+                      </Flex>
 
-                      <Stack direction={"row"} spacing={2} flexWrap="wrap">
-                        {project.tools.split(',').map((tool, toolIndex) => (
-                          <Badge key={toolIndex} bg={'teal'} fontSize="0.8em" borderRadius="full" px={2} mb={2}>
-                            {tool.trim()}
-                          </Badge>
-                        ))}
-                      </Stack>
+                      <Box p={3} h="100%">
+                        <Text fontWeight={"bold"} mb={2} color={colorMode1}>
+                          {project.project_name}
+                        </Text>
+
+                        <Stack direction={"row"} spacing={2} flexWrap="wrap">
+                          {project.tools.split(',').map((tool, toolIndex) => (
+                            <Badge key={toolIndex} bg={'teal'} fontSize="0.8em" borderRadius="full" px={2} mb={2}>
+                              {tool.trim()}
+                            </Badge>
+                          ))}
+                        </Stack>
+                      </Box>
                     </Box>
-                  </Box>
-                </GridItem>
-              ))}
+                  </GridItem>
+                ))}
+
             </Grid>
 
           )}
