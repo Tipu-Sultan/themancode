@@ -33,7 +33,7 @@ export default function CallToActionWithAnnotation() {
   const socialButtons = [
     {
       text: 'Preview Resume',
-      url: 'https://drive.google.com/file/d/1AruNdk4MNVNKgDRO_hdKr381K5a8ZcKs/view?usp=sharing',
+      url: 'https://drive.google.com/file/d/1T5SQ0wd2s3YgLdYNnRIaqfPWLTPor8dt/view?usp=sharing',
       icon: FaFile,
       style: {
         color:'#fff',
