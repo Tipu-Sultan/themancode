@@ -4,6 +4,8 @@ import qrcode from 'qrcode';
 import { createCanvas } from 'canvas';
 import Layout from '../components/Layout';
 import axios from 'axios';
+import PaymentComponent from './Razorpay';
+import PaymentButton from './Phonpe';
 
 
 const DonationComponent = () => {
@@ -20,11 +22,11 @@ const DonationComponent = () => {
             const expirationTimestamp = currentTimeInSeconds + 5 * 60;
 
             if (expirationTimestamp) {
-                await axios.post(`${HOST}/api/payment/save`,{
-                    user_id:'themancode',
-                    tid:currentTimeInSeconds,
-                    upiId:upiId,
-                    amount:150,
+                await axios.post(`${HOST}/api/payment/save`, {
+                    user_id: 'themancode',
+                    tid: currentTimeInSeconds,
+                    upiId: upiId,
+                    amount: 150,
                 })
                 const timeRemaining = expirationTimestamp - currentTimeInSeconds;
                 setTimer(Math.max(0, timeRemaining));
@@ -55,6 +57,7 @@ const DonationComponent = () => {
             console.error('Error generating QR Code:', error);
         }
     };
+
 
     return (
         <Layout>
@@ -111,6 +114,14 @@ const DonationComponent = () => {
                         h={400}
                     />
                 )}
+
+                <PaymentComponent/>
+                <PaymentButton
+                orderId='IS4545454'
+                amount={1012}
+                customerName={'tipu'}
+                customerPhone={'9919408817'}
+                 />
             </Box>
         </Layout>
     );
