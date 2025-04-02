@@ -9,7 +9,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ExternalLink, Github, ArrowLeft } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {
   Tooltip,
   TooltipContent,
@@ -26,6 +26,7 @@ const fadeInUp = {
 };
 
 export default function ProjectsPage() {
+  const pathname = usePathname()
   const router = useRouter();
   const [projects, setProjects] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -73,7 +74,7 @@ export default function ProjectsPage() {
     <section className="py-12 md:py-16 bg-gradient-to-br from-background via-muted/10 to-background">
       <div className="container max-w-6xl mx-auto px-4 sm:px-6">
         {/* Back Button */}
-        <motion.div
+        {pathname!=='/'&&<motion.div
           variants={fadeInUp}
           initial="initial"
           animate="animate"
@@ -87,7 +88,7 @@ export default function ProjectsPage() {
             <ArrowLeft className="w-5 h-5" />
             Back
           </Button>
-        </motion.div>
+        </motion.div>}
 
         {/* Header */}
         <motion.div

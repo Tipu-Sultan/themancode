@@ -9,8 +9,8 @@ import ClientProvider from './ClientProvider';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-  title: 'Portfolio - Full Stack Developer',
-  description: 'Full Stack Developer Portfolio showcasing expertise in Next.js, MERN, PHP, Laravel, and MySQL',
+  title: 'Tipu-Sultan - Full Stack Developer',
+  description: 'As Full Stack Developer Portfolio showcasing expertise in Next.js, MERN, PHP, Laravel, and MySQL',
 };
 
 export default function RootLayout({ children }) {
