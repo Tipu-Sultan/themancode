@@ -1,0 +1,65 @@
+{
+    "Next.js": {
+      "API Routes": [
+        {
+          "id": 1,
+          "title": "Basic API Handler",
+          "description": "Simple GET request handler",
+          "language": "javascript",
+          "code": "export async function GET(request) {\n  try {\n    const data = await fetchData();\n    return Response.json({ data });\n  } catch (error) {\n    return Response.json({ error: 'Internal Server Error' }, { status: 500 });\n  }\n}"
+        },
+        {
+          "id": 2,
+          "title": "POST Request Handler",
+          "description": "Handle POST requests with body parsing",
+          "language": "javascript",
+          "code": "export async function POST(request) {\n  try {\n    const body = await request.json();\n    const result = await processData(body);\n    return Response.json({ success: true, data: result });\n  } catch (error) {\n    return Response.json({ error: 'Bad Request' }, { status: 400 });\n  }\n}"
+        }
+      ],
+      "Dynamic Routes": [
+        {
+          "id": 3,
+          "title": "Dynamic Route File",
+          "description": "File-based dynamic routing",
+          "language": "javascript",
+          "code": "// pages/[id].js\nexport default function Page({ params }) {\n  return <div>Dynamic ID: {params.id}</div>;\n}\n\nexport async function getServerSideProps({ params }) {\n  return { props: { params } };\n}"
+        },
+        {
+          "id": 4,
+          "title": "Catch-All Route",
+          "description": "Handle multiple segments",
+          "language": "javascript",
+          "code": "// pages/[...slug].js\nexport default function CatchAll({ params }) {\n  return <div>Segments: {params.slug.join('/')}</div>;\n}\n\nexport async function getServerSideProps({ params }) {\n  return { props: { params } };\n}"
+        }
+      ]
+    },
+    "React": {
+      "Hooks": [
+        {
+          "id": 5,
+          "title": "Local Storage Hook",
+          "description": "Custom hook for local storage",
+          "language": "javascript",
+          "code": "function useLocalStorage(key, initialValue) {\n  const [storedValue, setStoredValue] = useState(() => {\n    try {\n      const item = window.localStorage.getItem(key);\n      return item ? JSON.parse(item) : initialValue;\n    } catch (error) {\n      return initialValue;\n    }\n  });\n\n  const setValue = (value) => {\n    try {\n      setStoredValue(value);\n      window.localStorage.setItem(key, JSON.stringify(value));\n    } catch (error) {\n      console.error(error);\n    }\n  };\n\n  return [storedValue, setValue];\n}"
+        },
+        {
+          "id": 5,
+          "title": "Local Storage Hook",
+          "description": "Custom hook for local storage",
+          "language": "javascript",
+          "code": "function useLocalStorage(key, initialValue) {\n  const [storedValue, setStoredValue] = useState(() => {\n    try {\n      const item = window.localStorage.getItem(key);\n      return item ? JSON.parse(item) : initialValue;\n    } catch (error) {\n      return initialValue;\n    }\n  });\n\n  const setValue = (value) => {\n    try {\n      setStoredValue(value);\n      window.localStorage.setItem(key, JSON.stringify(value));\n    } catch (error) {\n      console.error(error);\n    }\n  };\n\n  return [storedValue, setValue];\n}"
+        }
+      ]
+    },
+    "CSS": {
+      "Layouts": [
+        {
+          "id": 6,
+          "title": "Responsive Grid",
+          "description": "Tailwind CSS grid layout",
+          "language": "css",
+          "code": ".grid-container {\n  display: grid;\n  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));\n  gap: 1rem;\n  padding: 1rem;\n}"
+        }
+      ]
+    }
+  }

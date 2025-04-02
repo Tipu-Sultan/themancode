@@ -1,0 +1,47 @@
+[
+      {
+        "id": 1,
+        "title": "Building Scalable Applications with Next.js",
+        "excerpt": "Learn how to build and scale applications using Next.js and React",
+        "date": "2024-03-15",
+        "readTime": "5 min read",
+        "image": "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?q=80&w=1600&h=900",
+        "tags": ["Next.js", "React"],
+        "category": "Web Development",
+        "slug": "building-scalable-applications"
+      },
+      {
+        "id": 2,
+        "title": "Modern Database Design Patterns",
+        "excerpt": "Exploring effective database design patterns for modern applications",
+        "date": "2024-03-10",
+        "readTime": "7 min read",
+        "image": "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?q=80&w=1600&h=900",
+        "tags": ["Database", "Architecture"],
+        "category": "Backend",
+        "slug": "database-design-patterns"
+      },
+      {
+        "id": 3,
+        "title": "Mastering Tailwind CSS",
+        "excerpt": "A deep dive into styling with Tailwind CSS for rapid development",
+        "date": "2024-02-28",
+        "readTime": "6 min read",
+        "image": "https://images.unsplash.com/photo-1498050108023-c5249f45a50e?q=80&w=1600&h=900",
+        "tags": ["Tailwind CSS", "Frontend"],
+        "category": "Frontend",
+        "slug": "mastering-tailwind-css"
+      },
+      {
+        "id": 4,
+        "title": "AI-Powered Chatbots",
+        "excerpt": "Building intelligent chatbots with NLP and Python",
+        "date": "2024-02-20",
+        "readTime": "8 min read",
+        "image": "https://images.unsplash.com/photo-1531746790731-6c087f694bb6?q=80&w=1600&h=900",
+        "tags": ["Python", "AI"],
+        "category": "AI/ML",
+        "slug": "ai-powered-chatbots"
+      }
+    ]
+  
