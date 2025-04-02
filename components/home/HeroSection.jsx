@@ -1,13 +1,12 @@
 'use client';
 
 import { motion, useAnimation } from 'framer-motion';
-import { Github, Linkedin, Mail, Instagram } from 'lucide-react';
+import { Github, Linkedin, Mail, Instagram, FileText } from 'lucide-react'; // Added FileText for resume icon
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
-// Animation Variants
 const fadeInUp = {
   initial: { opacity: 0, y: 60 },
   animate: { opacity: 1, y: 0 },
@@ -35,6 +34,13 @@ const nameVariants = {
   transition: { duration: 0.8, ease: 'easeOut', delay: 0.2 },
 };
 
+const resumeCardVariants = {
+  initial: { opacity: 0, scale: 0.95 },
+  animate: { opacity: 1, scale: 1 },
+  transition: { duration: 0.6, ease: 'easeOut', delay: 0.5 },
+  whileHover: { scale: 1.02, boxShadow: '0 10px 20px rgba(0, 0, 0, 0.1)' },
+};
+
 export default function HeroSection() {
   const controls = useAnimation();
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
@@ -49,7 +55,7 @@ export default function HeroSection() {
 
   const stickers = [
     { text: 'Software Developer', color: 'bg-blue-500/20 text-blue-600 dark:bg-blue-400/30 dark:text-blue-300', position: '-top-6 -left-6', rotate: '-12deg' },
-    { text: 'Tech Enthusiast', color: 'bg-purple-500/20 text-purple-600 dark:bg-purple-400/30 dark:text-purple-300', position: 'top-20 -right-4', rotate: '8deg' },
+    // { text: 'Tech Enthusiast', color: 'bg-purple-500/20 text-purple-600 dark:bg-purple-400/30 dark:text-purple-300', position: 'top-20 -right-4', rotate: '8deg' },
   ];
 
   useEffect(() => {
@@ -61,15 +67,15 @@ export default function HeroSection() {
       }));
 
       const timeout = setTimeout(() => {
-        setCurrentRoleIndex((prev) => (prev + 1) % roles.length); // Cycle through roles
-      }, 2000); // Switch every 2 seconds
+        setCurrentRoleIndex((prev) => (prev + 1) % roles.length);
+      }, 2000);
 
-      return () => clearTimeout(timeout); // Cleanup timeout on unmount
+      return () => clearTimeout(timeout);
     };
 
     animateText();
 
-    return () => {}; // Cleanup function for useEffect
+    return () => {};
   }, [controls, currentRoleIndex, roles.length]);
 
   return (
@@ -190,9 +196,33 @@ export default function HeroSection() {
               </Button>
             </motion.div>
 
+            {/* Resume Preview */}
+            <motion.div
+              variants={resumeCardVariants}
+              initial="initial"
+              animate="animate"
+              whileHover="whileHover"
+              className="mt-6 max-w-sm mx-auto md:mx-0 bg-card border border-muted/30 dark:border-muted-foreground/20 rounded-lg p-4 shadow-md hover:shadow-xl transition-all duration-300"
+            >
+              <Link href="/resume" className="flex items-center gap-3">
+                <div className="flex-shrink-0">
+                  <FileText className="w-8 h-8 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-lg font-semibold text-foreground">My Resume</h3>
+                  <p className="text-sm text-muted-foreground dark:text-muted-foreground">
+                    Check out my skills and experience
+                  </p>
+                </div>
+                <span className="text-primary text-sm font-medium hover:underline">
+                  View →
+                </span>
+              </Link>
+            </motion.div>
+
             {/* Social Links */}
             <motion.div
-              className="flex flex-wrap justify-center md:justify-start gap-4"
+              className="flex flex-wrap justify-center md:justify-start gap-4 mt-6"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}

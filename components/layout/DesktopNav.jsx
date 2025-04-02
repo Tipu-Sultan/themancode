@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { useSession, signOut } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -9,43 +9,11 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { ModeToggle } from '../mode-toggle';
-import { useState } from 'react';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { useRouter, usePathname } from 'next/navigation';
 
-export default function DesktopNav({ navItems }) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const { data: session, status } = useSession();
-  const isAdmin = session?.user?.isAdmin;
-  const [showSignOutDialog, setShowSignOutDialog] = useState(false);
-
-  const handleSignOut = async () => {
-    await signOut({ callbackUrl: '/' });
-  };
-
-  const handleSignIn = () => {
-    router.push('/login');
-  };
-
-  // Function to check if a link should be highlighted
-  const isActiveLink = (href) => {
-    // Handle root path exact match
-    if (href === '/' && pathname === '/') return true;
-    // Handle nested paths (e.g., /blog or /blog/category)
-    if (href !== '/' && pathname.startsWith(href)) return true;
-    return false;
-  };
+export default function DesktopNav({ navItems,user,status,handleSignIn,setShowSignOutDialog,isActiveLink }) {
+  const isAdmin = user?.isAdmin;
 
   return (
     <div className="hidden lg:flex items-center w-full justify-between">
@@ -96,11 +64,11 @@ export default function DesktopNav({ navItems }) {
               <DropdownMenuTrigger asChild>
                 <Avatar className="cursor-pointer hover:ring-2 hover:ring-primary transition-all">
                   <AvatarImage 
-                    src={session?.user?.image || '/avatar.jpg'} 
+                    src={user?.image || '/avatar.jpg'} 
                     alt="Profile" 
                   />
                   <AvatarFallback>
-                    {session?.user?.name?.[0]?.toUpperCase() || 'U'}
+                    {user?.name?.[0]?.toUpperCase() || 'U'}
                   </AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
@@ -126,27 +94,6 @@ export default function DesktopNav({ navItems }) {
           </Button>
         )}
       </div>
-
-      {/* Sign Out Confirmation Dialog */}
-      <AlertDialog open={showSignOutDialog} onOpenChange={setShowSignOutDialog}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>Are you sure you want to sign out?</AlertDialogTitle>
-            <AlertDialogDescription>
-              You will be logged out of your account and redirected to the homepage.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction 
-              onClick={handleSignOut}
-              className="bg-red-600 hover:bg-red-700"
-            >
-              Sign Out
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </div>
   );
 }

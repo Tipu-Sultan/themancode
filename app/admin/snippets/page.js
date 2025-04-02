@@ -14,7 +14,7 @@ const fadeInUp = {
 
 export default function AdminSnippetsPage() {
   return (
-    <section className="min-h-screen py-16 px-4 bg-background">
+    <section className="min-h-screen px-4 bg-background">
       <div className="container max-w-7xl mx-auto">
         <motion.div variants={fadeInUp} initial="initial" animate="animate" className="mb-12">
           <div className="flex justify-between items-center">

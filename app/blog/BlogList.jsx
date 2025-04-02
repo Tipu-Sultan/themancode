@@ -57,6 +57,7 @@ export default function BlogList({ blogsData }) {
                 </div>
               </CardHeader>
               <CardContent className="flex-1 flex flex-col p-4">
+              <Link href={`/blog/${blog.category.toLowerCase().replace(/\s+/g, '-')}/${blog.slug}`}>
                 <div className="flex items-center gap-4 text-sm text-muted-foreground mb-3">
                   <span className="flex items-center gap-1">
                     <Calendar className="w-4 h-4" />
@@ -67,7 +68,7 @@ export default function BlogList({ blogsData }) {
                     {blog.readTime}
                   </span>
                 </div>
-                <Link href={`/blog/${blog.category.toLowerCase().replace(/\s+/g, '-')}/${blog.slug}`}>
+                
                   <h2 className="text-xl font-semibold mb-2 hover:text-primary transition-colors">
                     {blog.title}
                   </h2>

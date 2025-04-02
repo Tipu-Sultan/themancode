@@ -1,14 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
 import Image from 'next/image';
 import Link from 'next/link';
 import { ExternalLink, Github, ArrowLeft } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
 import { usePathname, useRouter } from 'next/navigation';
 import {
   Tooltip,
@@ -17,7 +15,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 
-const categories = ['All', 'Full-Stack Development','Web Development', 'Frontend', 'AI/ML', 'Mobile'];
+const categories = ['All', 'Full-Stack Development', 'Web Development', 'Frontend', 'AI/ML', 'Mobile'];
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -25,70 +23,38 @@ const fadeInUp = {
   transition: { duration: 0.5, ease: 'easeOut' },
 };
 
-export default function ProjectsPage() {
-  const pathname = usePathname()
-  const router = useRouter();
-  const [projects, setProjects] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('All');
-  const [loading, setLoading] = useState(true);
-  const { toast } = useToast();
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      try {
-        const res = await fetch('/api/admin/project');
-        const data = await res.json();
-        if (res.ok) {
-          setProjects(data);
-        } else {
-          toast({ title: 'Error', description: data.message || 'Failed to fetch projects', variant: 'destructive' });
-        }
-      } catch (error) {
-        toast({ title: 'Error', description: 'An error occurred while fetching projects', variant: 'destructive' });
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProjects();
-  }, [toast]);
+
+export default function ProjectsPage({ projects }) {
+  const pathname = usePathname();
+  const router = useRouter();
+  const [selectedCategory, setSelectedCategory] = useState('All');
 
   const filteredProjects = selectedCategory === 'All'
     ? projects
     : projects.filter((project) => project.category.toLowerCase() === selectedCategory.toLowerCase());
 
-  if (loading) {
-    return (
-      <section className="py-12 md:py-16 bg-gradient-to-br from-background via-muted/10 to-background">
-        <div className="container max-w-6xl mx-auto px-4 sm:px-6">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {[...Array(6)].map((_, index) => (
-              <Skeleton key={index} className="h-64 w-full rounded-xl" />
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
-
   return (
     <section className="py-12 md:py-16 bg-gradient-to-br from-background via-muted/10 to-background">
       <div className="container max-w-6xl mx-auto px-4 sm:px-6">
         {/* Back Button */}
-        {pathname!=='/'&&<motion.div
-          variants={fadeInUp}
-          initial="initial"
-          animate="animate"
-          className="mb-6"
-        >
-          <Button
-            variant="ghost"
-            onClick={() => router.back()}
-            className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
+        {pathname !== '/' && (
+          <motion.div
+            variants={fadeInUp}
+            initial="initial"
+            animate="animate"
+            className="mb-6"
           >
-            <ArrowLeft className="w-5 h-5" />
-            Back
-          </Button>
-        </motion.div>}
+            <Button
+              variant="ghost"
+              onClick={() => router.back()}
+              className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
+            >
+              <ArrowLeft className="w-5 h-5" />
+              Back
+            </Button>
+          </motion.div>
+        )}
 
         {/* Header */}
         <motion.div
@@ -132,7 +98,7 @@ export default function ProjectsPage() {
         {/* Projects Grid */}
         <TooltipProvider>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredProjects.map((project, index) => (
+            {filteredProjects?.map((project, index) => (
               <motion.div
                 key={project._id}
                 variants={fadeInUp}
@@ -148,6 +114,7 @@ export default function ProjectsPage() {
                       alt={project.title}
                       fill
                       className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      priority={index < 3} // Prioritize first 3 images
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90" />
                     <span className="absolute top-2 right-2 bg-primary/40 text-xs px-2 py-1 rounded-full">
@@ -179,29 +146,40 @@ export default function ProjectsPage() {
                       ))}
                     </div>
                     <div className="flex gap-2">
-                      <Button
-                        variant="outline"
-                        asChild
-                        className="w-full rounded-full text-sm py-1 hover:bg-muted/50 transition-all duration-300"
-                      >
-                        <Link
-                          href={project.github}
-                          className="flex items-center justify-center gap-1"
-                          target="_blank"
-                          rel="noopener noreferrer"
+                      {project.github && (
+                        <Button
+                          variant="outline"
+                          asChild
+                          className="w-full rounded-full text-sm py-1 hover:bg-muted/50 transition-all duration-300"
                         >
-                          <Github className="w-4 h-4" /> GitHub
-                        </Link>
-                      </Button>
-                      <Button
-                        variant="outline"
-                        asChild
-                        className="w-full rounded-full text-sm py-1 hover:bg-muted/50 transition-all duration-300"
-                      >
-                        <Link href={project.url} className="flex items-center justify-center gap-1">
-                          <ExternalLink className="w-4 h-4" /> Explore
-                        </Link>
-                      </Button>
+                          <Link
+                            href={project.github}
+                            className="flex items-center justify-center gap-1"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`View ${project.title} on GitHub`}
+                          >
+                            <Github className="w-4 h-4" /> GitHub
+                          </Link>
+                        </Button>
+                      )}
+                      {project.url && (
+                        <Button
+                          variant="outline"
+                          asChild
+                          className="w-full rounded-full text-sm py-1 hover:bg-muted/50 transition-all duration-300"
+                        >
+                          <Link
+                            href={project.url}
+                            className="flex items-center justify-center gap-1"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`Explore ${project.title} project`}
+                          >
+                            <ExternalLink className="w-4 h-4" /> Explore
+                          </Link>
+                        </Button>
+                      )}
                     </div>
                   </CardContent>
                 </Card>
@@ -211,7 +189,7 @@ export default function ProjectsPage() {
         </TooltipProvider>
 
         {/* No Projects Message */}
-        {filteredProjects.length === 0 && (
+        {filteredProjects?.length === 0 && (
           <motion.div
             variants={fadeInUp}
             initial="initial"

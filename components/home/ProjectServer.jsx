@@ -1,21 +1,20 @@
 import { Suspense } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { fetchAllProjects } from '@/lib/server/client/api';
-import ProjectsPage from './ProjectsSection';
+import ProjectsClient from './ProjectsClient';
 
 // Convert MongoDB objects to plain values
 function serializeProjects(projects) {
   return projects.map((project) => ({
     ...project,
-    _id: project._id.toString(), // Convert ObjectId to string
-    createdAt: project.createdAt ? project.createdAt.toISOString() : null, // Convert Date to ISO string
-    // Add other fields if needed (e.g., updatedAt)
+    _id: project._id.toString(),
+    createdAt: project.createdAt ? project.createdAt.toISOString() : null,
   }));
 }
 
-export default async function Page() {
+export default async function ProjectsServer() {
   const rawProjects = await fetchAllProjects();
-  const projects = serializeProjects(rawProjects); // Serialize data
+  const projects = serializeProjects(rawProjects);
 
   return (
     <div>
@@ -32,9 +31,8 @@ export default async function Page() {
           </section>
         }
       >
-        <ProjectsPage projects={projects} />
+        <ProjectsClient projects={projects} />
       </Suspense>
     </div>
   );
 }
-

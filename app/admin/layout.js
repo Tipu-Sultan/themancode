@@ -11,7 +11,8 @@ import {
   Video, 
   Settings,
   Menu,
-  X
+  X,
+  User
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -21,7 +22,8 @@ export default function AdminLayout({ children }) {
   const pathname = usePathname();
 
   const menuItems = [
-    { icon: LayoutDashboard, label: 'Dashboard', href: '/admin' },
+    { icon: LayoutDashboard, label: 'Dashboard', href: '/admin/dashboard' },
+    { icon: User, label: 'Users', href: '/admin/users' },
     { icon: FileText, label: 'Blog Posts', href: '/admin/blogs' },
     { icon: FileText, label: 'Projects', href: '/admin/projects' },
     { icon: Code2, label: 'Code Snippets', href: '/admin/snippets' },
@@ -32,7 +34,7 @@ export default function AdminLayout({ children }) {
   return (
     <div className="min-h-screen bg-background">
       {/* Mobile Sidebar Toggle */}
-      <div className="md:hidden fixed top-4 left-4 z-50">
+      <div className="md:hidden fixed top-4 py-10 left-4 z-50">
         <Button
           variant="outline"
           size="icon"
@@ -49,7 +51,7 @@ export default function AdminLayout({ children }) {
           isSidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         )}
       >
-        <div className="p-4">
+        <div className="p-4 py-16">
           <h1 className="text-2xl font-bold mb-8">Admin Panel</h1>
           <nav className="space-y-2">
             {menuItems.map((item) => {
