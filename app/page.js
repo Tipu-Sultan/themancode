@@ -5,6 +5,7 @@ import ProjectsServer from "@/components/home/ProjectServer";
 import SkillsSection from "@/components/home/SkillsSection";
 
 export default function Home() {
+  console.log("NEXTAUTH_SECRET",process.env.NEXTAUTH_SECRET)
   return (
     <main className="min-h-screen">
       <HeroSection />
