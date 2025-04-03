@@ -1,39 +1,57 @@
+import { Github, Instagram, Linkedin } from "lucide-react";
+
 export default function Footer() {
   return (
-    <footer className="border-t py-6 bg-gray-900 text-white">
+    <footer className="border-t py-8 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="text-center md:text-left mb-4 md:mb-0">
-            <p className="text-sm">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+          {/* Left Section - Branding */}
+          <div className="text-center md:text-left">
+            <h3 className="text-lg font-semibold tracking-wide">
+              Tipu Sultan
+            </h3>
+            <p className="text-sm text-gray-300 mt-1">
               © {new Date().getFullYear()} Portfolio. All rights reserved.
             </p>
           </div>
-          <div className="flex gap-6">
+
+          {/* Right Section - Social Links */}
+          <div className="flex gap-8">
             <a
-              href="https://github.com"
+              href="https://github.com/Tipu-Sultan?tab=repositories"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-gray-400 transition"
+              className="group flex items-center gap-2 text-sm font-medium hover:text-yellow-400 transition-all duration-300"
             >
+              <Github/>
               GitHub
             </a>
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/tipu-sultan-47b4221b4/"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-gray-400 transition"
+              className="group flex items-center gap-2 text-sm font-medium hover:text-yellow-400 transition-all duration-300"
             >
+              <Linkedin/>
               LinkedIn
             </a>
             <a
-              href="https://twitter.com"
+              href="https://instagram.com/pathan__sultan"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-gray-400 transition"
+              className="group flex items-center gap-2 text-sm font-medium hover:text-yellow-400 transition-all duration-300"
             >
-              Twitter
+              <Instagram/>
+              Instagram
             </a>
           </div>
+        </div>
+
+        {/* Bottom Divider and Tagline */}
+        <div className="mt-6 border-t border-gray-700 pt-4 text-center">
+          <p className="text-xs text-gray-400">
+            Designed & Built by Tipu Sultan | Crafting Digital Excellence
+          </p>
         </div>
       </div>
     </footer>

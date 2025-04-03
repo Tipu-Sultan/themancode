@@ -26,7 +26,9 @@ export default function RootLayout({ children }) {
           <ClientProvider>
            <Toaster/>
           <Navbar />
-          <main className="min-h-screen">{children}</main>
+          <main className="min-h-screen">
+            {children}
+            </main>
           <Footer />
           </ClientProvider>
         </ThemeProvider>

@@ -20,7 +20,7 @@ export default function AdminSnippetsPage() {
           <div className="flex justify-between items-center">
             <h1 className="text-4xl font-bold tracking-tight">Manage Snippets</h1>
             <Button asChild>
-              <Link href="/admin/projects/snippets">Create New Snippet</Link>
+              <Link href="/admin/snippets/create">Create New Snippet</Link>
             </Button>
           </div>
           <div className="h-1 w-24 sm:w-32 bg-gradient-to-r from-primary to-transparent rounded-full my-4" />

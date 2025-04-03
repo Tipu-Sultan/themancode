@@ -10,7 +10,7 @@ export default function Home() {
       <HeroSection />
       <ProjectsServer />
       <SkillsSection />
-      <AcademicSections />
+      {/* <AcademicSections /> */}
       <ContactSection />
     </main>
   );
