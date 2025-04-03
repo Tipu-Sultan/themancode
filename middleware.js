@@ -1,35 +1,28 @@
-import { NextResponse } from 'next/server'
-import { getToken } from 'next-auth/jwt'
+import { NextResponse } from "next/server";
+import { getToken } from "next-auth/jwt";
 
-// Secret should match the one used in NextAuth config
-const secret = process.env.NEXTAUTH_SECRET
+export async function middleware(request) {
+  // Extract the session token
+  const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
 
-export async function middleware(req) {
-  // Get the pathname of the request
-  const { pathname } = req.nextUrl
-
-  
-
-  // Check if the path starts with /admin
-  if (pathname.startsWith('/admin')) {
-    // Get the token from the request
-    const token = await getToken({ req, secret })
-
-
-    if (!token || !token.isAdmin) {
-      // Redirect to homepage
-      const url = req.nextUrl.clone()
-      url.pathname = '/'
-      return NextResponse.redirect(url)
-    }
+  // If user is logged in and tries to access /login, redirect to home
+  if (token && request.nextUrl.pathname === "/login") {
+    return NextResponse.redirect(new URL("/", request.url));
   }
 
-  console.log(secret,pathname)
-  // If no conditions match, proceed with the request
-  return NextResponse.next()
+  // Check if the user is an admin
+  const isAdmin = token?.isAdmin === true; // Ensure explicit check for true
+
+  // If user is not an admin and tries to access /admin routes, redirect to home
+  if (!isAdmin && request.nextUrl.pathname.startsWith("/admin")) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
+  // Allow the request to proceed if no conditions are met
+  return NextResponse.next();
 }
 
-// Define the matcher to apply middleware to specific routes
+// Apply middleware to specific routes
 export const config = {
-  matcher: ['/admin', '/admin/:path*'],
+  matcher: ["/admin/:path*", "/login"], // Protect admin routes and login
 };
