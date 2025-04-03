@@ -42,6 +42,7 @@ const resumeCardVariants = {
 };
 
 export default function HeroSection() {
+  console.log("NEXTAUTH_SECRET",process.env.NEXT_PUBLIC_NEXTAUTH_SECRET)
   const controls = useAnimation();
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   const roles = ['Next.js', 'Mern.js', 'Web Developer', 'Full-stack Developer'];

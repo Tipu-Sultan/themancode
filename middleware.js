@@ -3,7 +3,7 @@ import { getToken } from "next-auth/jwt";
 
 export async function middleware(request) {
   // Extract the session token
-  const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
+  const token = await getToken({ req: request, secret: process.env.NEXT_PUBLIC_NEXTAUTH_SECRET });
 
   // If user is logged in and tries to access /login, redirect to home
   if (token && request.nextUrl.pathname === "/login") {
