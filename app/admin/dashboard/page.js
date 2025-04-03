@@ -1,4 +1,3 @@
-// components/admin/AdminDashboard.jsx (or wherever you place it)
 'use client';
 
 import { useState, useEffect } from 'react';

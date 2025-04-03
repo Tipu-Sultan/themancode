@@ -17,7 +17,6 @@ export default function Login() {
     try {
       await signIn('google', { callbackUrl: '/admin/dashboard' })
     } catch (error) {
-      console.error('Google sign-in error:', error)
       setIsLoading(false) // Reset loading on error
     }
     // Note: Loading state will persist until redirect occurs on success
