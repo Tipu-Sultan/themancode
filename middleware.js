@@ -15,7 +15,7 @@ export async function middleware(request) {
   const isAdmin = token?.isAdmin === true; // Ensure explicit check for true
 
   // If user is not an admin and tries to access /admin routes, redirect to home
-  if (!isAdmin && request.nextUrl.pathname.startsWith("/admin")) {
+  if (!isAdmin) {
     return NextResponse.redirect(new URL("/", request.url));
   }
 
@@ -25,5 +25,5 @@ export async function middleware(request) {
 
 // Apply middleware to specific routes
 export const config = {
-  matcher: ["/admin/:path*", "/login"], // Protect admin routes and login
+  matcher: ["/admin/:path*"], // Protect admin routes and login
 };

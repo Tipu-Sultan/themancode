@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { 
   LayoutDashboard, 
@@ -20,6 +20,19 @@ import { cn } from '@/lib/utils';
 export default function AdminLayout({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const pathname = usePathname();
+  const { data: session, status } = useSession()
+    const router = useRouter()
+  
+    // Loading state
+    if (status === 'loading') {
+      return <div className="p-8 text-center">Loading...</div>
+    }
+  
+    // Redirect if not authenticated or not an admin
+    if (!session || !session.user?.isAdmin) {
+      router.push('/')
+      return null
+    }
 
   const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', href: '/admin/dashboard' },
