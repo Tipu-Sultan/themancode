@@ -79,14 +79,14 @@ export default function ContactForm() {
             <Mail className="w-8 h-8 text-primary" />
             <div>
               <h3 className="font-semibold">Email</h3>
-              <p className="text-muted-foreground">contact@example.com</p>
+              <a href={'mailto:themancode7@gmail.com'} target="_blank" rel="noopener noreferrer" className="text-muted-foreground">themancode7@gmail.com</a>
             </div>
           </div>
           <div className="flex items-center gap-4 p-6 bg-card rounded-lg border">
             <Phone className="w-8 h-8 text-primary" />
             <div>
               <h3 className="font-semibold">Phone</h3>
-              <p className="text-muted-foreground">+1 (555) 123-4567</p>
+              <a href={'mailto:themancode7@gmail.com'}  className="text-muted-foreground">+91 (991) 940-8817</a>
             </div>
           </div>
         </div>
