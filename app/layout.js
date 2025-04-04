@@ -1,16 +1,18 @@
-import { Inter } from 'next/font/google';
-import { ThemeProvider } from '@/components/theme-provider';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
-import './globals.css';
-import { Toaster } from '@/components/ui/toaster';
-import ClientProvider from './ClientProvider';
+import { Inter } from "next/font/google";
+import { ThemeProvider } from "@/components/theme-provider";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import "./globals.css";
+import { Toaster } from "@/components/ui/toaster";
+import ClientProvider from "./ClientProvider";
+import { usePathname } from "next/navigation";
 
-const inter = Inter({ subsets: ['latin'] });
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: 'Tipu-Sultan - Full Stack Developer',
-  description: 'As Full Stack Developer Portfolio showcasing expertise in Next.js, MERN, PHP, Laravel, and MySQL',
+  title: "Tipu-Sultan - Full Stack Developer",
+  description:
+    "As Full Stack Developer Portfolio showcasing expertise in Next.js, MERN, PHP, Laravel, and MySQL",
 };
 
 export default function RootLayout({ children }) {
@@ -24,12 +26,10 @@ export default function RootLayout({ children }) {
           disableTransitionOnChange
         >
           <ClientProvider>
-           <Toaster/>
-          <Navbar />
-          <main className="min-h-screen">
-            {children}
-            </main>
-          <Footer />
+            <Toaster />
+            <Navbar />
+            <main className="min-h-screen">{children}</main>
+            <Footer />
           </ClientProvider>
         </ThemeProvider>
       </body>

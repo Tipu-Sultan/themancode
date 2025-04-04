@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { 
   LayoutDashboard, 
@@ -21,19 +21,44 @@ import { useSession } from 'next-auth/react';
 export default function AdminLayout({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const pathname = usePathname();
-  const { data: session, status } = useSession()
-    const router = useRouter()
-  
-    // Loading state
-    if (status === 'loading') {
-      return <div className="p-8 text-center">Loading...</div>
-    }
-  
-    // Redirect if not authenticated or not an admin
-    if (!session || !session.user?.isAdmin) {
-      router.push('/')
-      return null
-    }
+  const { data: session, status } = useSession();
+
+  // Loading state with skeleton
+  if (status === 'loading') {
+    return (
+      <div className="min-h-screen bg-background">
+        {/* Skeleton for Sidebar */}
+        <aside className="fixed top-0 left-0 z-40 w-64 h-screen bg-card border-r">
+          <div className="p-4 py-16">
+            {/* Skeleton for Title */}
+            <div className="h-8 w-3/4 bg-muted rounded mb-8 animate-pulse" />
+            {/* Skeleton for Menu Items */}
+            <nav className="space-y-2">
+              {[...Array(7)].map((_, index) => (
+                <div
+                  key={index}
+                  className="flex items-center gap-3 px-4 py-2 rounded-lg bg-muted animate-pulse"
+                >
+                  <div className="w-5 h-5 bg-gray-300 rounded-full" />
+                  <div className="h-4 w-2/3 bg-gray-300 rounded" />
+                </div>
+              ))}
+            </nav>
+          </div>
+        </aside>
+
+        {/* Skeleton for Main Content */}
+        <main className="md:ml-64 p-8 pt-20">
+          <div className="space-y-4">
+            <div className="h-10 w-1/3 bg-muted rounded animate-pulse" />
+            <div className="h-64 w-full bg-muted rounded animate-pulse" />
+            <div className="h-4 w-2/3 bg-muted rounded animate-pulse" />
+            <div className="h-4 w-1/2 bg-muted rounded animate-pulse" />
+          </div>
+        </main>
+      </div>
+    );
+  }
 
   const menuItems = [
     { icon: LayoutDashboard, label: 'Dashboard', href: '/admin/dashboard' },

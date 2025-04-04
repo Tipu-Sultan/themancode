@@ -86,7 +86,7 @@ export default function ContactForm() {
             <Phone className="w-8 h-8 text-primary" />
             <div>
               <h3 className="font-semibold">Phone</h3>
-              <a href={'mailto:themancode7@gmail.com'}  className="text-muted-foreground">+91 (991) 940-8817</a>
+              <a href={'mailto:9919408817'}  className="text-muted-foreground">+91 9919-408817</a>
             </div>
           </div>
         </div>
