@@ -15,7 +15,7 @@ export async function middleware(request) {
   // Get the session token from the request (NextAuth JWT) only for admin routes
   const token = await getToken({
     req: request,
-    secret: process.env.NEXT_PUBLIC_NEXTAUTH_SECRET,
+    secret: process.env.NEXTAUTH_SECRET || 'askfosfsdgsgsdngnslknls11w3rwfeEnkdnsk77AKw3883sdnsksfnsklnlksa',
   });
 
   // Check if the user is authenticated

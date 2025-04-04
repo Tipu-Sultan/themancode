@@ -46,13 +46,6 @@ export default function Footer() {
             </a>
           </div>
         </div>
-
-        {/* Bottom Divider and Tagline */}
-        <div className="mt-6 border-t border-gray-700 pt-4 text-center">
-          <p className="text-xs text-gray-400">
-            Designed & Built by Tipu Sultan | Crafting Digital Excellence
-          </p>
-        </div>
       </div>
     </footer>
   );

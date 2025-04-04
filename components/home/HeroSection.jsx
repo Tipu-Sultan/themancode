@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { motion, useAnimation } from 'framer-motion';
-import { Github, Linkedin, Mail, Instagram, FileText } from 'lucide-react'; // Added FileText for resume icon
-import Image from 'next/image';
-import { Button } from '@/components/ui/button';
-import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { motion, useAnimation } from "framer-motion";
+import { Github, Linkedin, Mail, Instagram, FileText } from "lucide-react"; // Added FileText for resume icon
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const fadeInUp = {
   initial: { opacity: 0, y: 60 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6, ease: 'easeOut' },
+  transition: { duration: 0.6, ease: "easeOut" },
 };
 
 const splitTextVariants = {
@@ -18,43 +18,76 @@ const splitTextVariants = {
   animate: (i) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, delay: i * 0.1, ease: 'easeOut' },
+    transition: { duration: 0.5, delay: i * 0.1, ease: "easeOut" },
   }),
 };
 
 const stickerVariants = {
   initial: { opacity: 0, rotate: -10, scale: 0.8 },
   animate: { opacity: 1, rotate: 0, scale: 1 },
-  transition: { duration: 0.5, type: 'spring', bounce: 0.4 },
+  transition: { duration: 0.5, type: "spring", bounce: 0.4 },
 };
 
 const nameVariants = {
   initial: { scale: 0.9, opacity: 0 },
   animate: { scale: 1, opacity: 1 },
-  transition: { duration: 0.8, ease: 'easeOut', delay: 0.2 },
+  transition: { duration: 0.8, ease: "easeOut", delay: 0.2 },
 };
 
 const resumeCardVariants = {
   initial: { opacity: 0, scale: 0.95 },
   animate: { opacity: 1, scale: 1 },
-  transition: { duration: 0.6, ease: 'easeOut', delay: 0.5 },
-  whileHover: { scale: 1.02, boxShadow: '0 10px 20px rgba(0, 0, 0, 0.1)' },
+  transition: { duration: 0.6, ease: "easeOut", delay: 0.5 },
+  whileHover: { scale: 1.02, boxShadow: "0 10px 20px rgba(0, 0, 0, 0.1)" },
 };
 
 export default function HeroSection() {
   const controls = useAnimation();
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
-  const roles = ['Next.js', 'Mern.js', 'Web Developer', 'Full-stack Developer'];
+  const roles = ["Next.js", "Mern.js", "Web Developer", "Full-stack Developer"];
+
+  console.log(process.env.NEXTAUTH_SECRET);
+  console.log("SECRET:", process.env.NEXTAUTH_SECRET);
 
   const socials = [
-    { icon: Github, href: 'https://github.com/Tipu-Sultan?tab=repositories', label: 'GitHub', followers: '1.2k', color: 'text-purple-500' },
-    { icon: Linkedin, href: 'https://www.linkedin.com/in/tipu-sultan-47b4221b4/', label: 'LinkedIn', followers: '850', color: 'text-blue-500' },
-    { icon: Instagram, href: 'https://www.instagram.com/pathan__sultan/', label: 'Instagram', followers: '774', color: 'text-cyan-500' },
-    { icon: Mail, href: 'mailto:teepukhan729@gmail.com', label: 'Email', followers: null, color: 'text-green-500' },
+    {
+      icon: Github,
+      href: "https://github.com/Tipu-Sultan?tab=repositories",
+      label: "GitHub",
+      followers: "1.2k",
+      color: "text-purple-500",
+    },
+    {
+      icon: Linkedin,
+      href: "https://www.linkedin.com/in/tipu-sultan-47b4221b4/",
+      label: "LinkedIn",
+      followers: "850",
+      color: "text-blue-500",
+    },
+    {
+      icon: Instagram,
+      href: "https://www.instagram.com/pathan__sultan/",
+      label: "Instagram",
+      followers: "774",
+      color: "text-cyan-500",
+    },
+    {
+      icon: Mail,
+      href: "mailto:teepukhan729@gmail.com",
+      label: "Email",
+      followers: null,
+      color: "text-green-500",
+    },
   ];
 
   const stickers = [
-    { text: 'Software Developer', color: 'bg-blue-500/20 text-blue-600 dark:bg-blue-400/30 dark:text-blue-300', position: '-top-6 -left-6', rotate: '-12deg' },
+    {
+      text: "Software Developer",
+      color:
+        "bg-blue-500/20 text-blue-600 dark:bg-blue-400/30 dark:text-blue-300",
+      position: "-top-6 -left-6",
+      rotate: "-12deg",
+    },
     // { text: 'Tech Enthusiast', color: 'bg-purple-500/20 text-purple-600 dark:bg-purple-400/30 dark:text-purple-300', position: 'top-20 -right-4', rotate: '8deg' },
   ];
 
@@ -63,7 +96,7 @@ export default function HeroSection() {
       await controls?.start((i) => ({
         opacity: i === currentRoleIndex ? 1 : 0,
         y: i === currentRoleIndex ? 0 : 20,
-        transition: { duration: 0.5, ease: 'easeOut' },
+        transition: { duration: 0.5, ease: "easeOut" },
       }));
 
       const timeout = setTimeout(() => {
@@ -113,10 +146,10 @@ export default function HeroSection() {
             <motion.h1
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, ease: 'easeOut' }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight"
             >
-              Hey, I'm{' '}
+              Hey, I'm{" "}
               <motion.span
                 variants={nameVariants}
                 initial="initial"
@@ -139,7 +172,7 @@ export default function HeroSection() {
                   animate={controls}
                   className="absolute text-lg sm:text-xl md:text-2xl font-medium w-full"
                 >
-                  {role.split('').map((char, i) => (
+                  {role.split("").map((char, i) => (
                     <motion.span
                       key={i}
                       custom={i}
@@ -147,12 +180,14 @@ export default function HeroSection() {
                       initial="initial"
                       animate="animate"
                       className={`inline-block ${
-                        index === 0 ? 'text-blue-500 dark:text-blue-400' :
-                        index === 1 ? 'text-green-500 dark:text-green-400' :
-                        'text-purple-500 dark:text-purple-400'
+                        index === 0
+                          ? "text-blue-500 dark:text-blue-400"
+                          : index === 1
+                          ? "text-green-500 dark:text-green-400"
+                          : "text-purple-500 dark:text-purple-400"
                       }`}
                     >
-                      {char === ' ' ? '\u00A0' : char}
+                      {char === " " ? "\u00A0" : char}
                     </motion.span>
                   ))}
                 </motion.p>
@@ -166,9 +201,13 @@ export default function HeroSection() {
               transition={{ delay: 0.3, duration: 0.5 }}
               className="text-base sm:text-lg md:text-xl text-muted-foreground dark:text-muted-foreground max-w-md mx-auto md:mx-0"
             >
-              Building{' '}
-              <span className="text-yellow-500 dark:text-yellow-400">modern</span> and{' '}
-              <span className="text-pink-500 dark:text-pink-400">scalable</span> solutions
+              Building{" "}
+              <span className="text-yellow-500 dark:text-yellow-400">
+                modern
+              </span>{" "}
+              and{" "}
+              <span className="text-pink-500 dark:text-pink-400">scalable</span>{" "}
+              solutions
             </motion.p>
 
             {/* Buttons */}
@@ -182,9 +221,14 @@ export default function HeroSection() {
                 size="lg"
                 className="bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 dark:from-blue-400 dark:to-purple-400 dark:hover:from-blue-500 dark:hover:to-purple-500 text-white rounded-full px-6 shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                <Link href="/projects" className="flex items-center text-base sm:text-lg">
+                <Link
+                  href="/projects"
+                  className="flex items-center text-base sm:text-lg"
+                >
                   Explore Projects
-                  <span className="ml-2 group-hover:translate-x-2 transition-transform duration-200">→</span>
+                  <span className="ml-2 group-hover:translate-x-2 transition-transform duration-200">
+                    →
+                  </span>
                 </Link>
               </Button>
               <Button
@@ -209,7 +253,9 @@ export default function HeroSection() {
                   <FileText className="w-8 h-8 text-primary" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-lg font-semibold text-foreground">My Resume</h3>
+                  <h3 className="text-lg font-semibold text-foreground">
+                    My Resume
+                  </h3>
                   <p className="text-sm text-muted-foreground dark:text-muted-foreground">
                     Check out my skills and experience
                   </p>
@@ -235,15 +281,47 @@ export default function HeroSection() {
                   rel="noopener noreferrer"
                   whileHover={{ y: -4, scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  className={`flex items-center gap-2 p-2 rounded-lg bg-muted/20 dark:bg-muted-foreground/10 hover:bg-${social.color.split('-')[1]}-100/20 border border-muted/30 dark:border-muted-foreground/20 hover:border-${social.color.split('-')[1]}-400/40 transition-all duration-300 shadow-sm hover:shadow-md`}
+                  className={`flex items-center gap-2 p-2 rounded-lg bg-muted/20 dark:bg-muted-foreground/10 hover:bg-${
+                    social.color.split("-")[1]
+                  }-100/20 border border-muted/30 dark:border-muted-foreground/20 hover:border-${
+                    social.color.split("-")[1]
+                  }-400/40 transition-all duration-300 shadow-sm hover:shadow-md`}
                   transition={{ delay: index * 0.1 }}
                 >
-                  <social.icon className={`w-5 h-5 ${social.color} dark:${social.color.replace('500', '400')} group-hover:${social.color.replace('500', '600')} dark:group-hover:${social.color.replace('500', '500')}`} />
-                  <span className={`text-sm font-medium ${social.color} dark:${social.color.replace('500', '400')} group-hover:${social.color.replace('500', '600')} dark:group-hover:${social.color.replace('500', '500')}`}>
+                  <social.icon
+                    className={`w-5 h-5 ${
+                      social.color
+                    } dark:${social.color.replace(
+                      "500",
+                      "400"
+                    )} group-hover:${social.color.replace(
+                      "500",
+                      "600"
+                    )} dark:group-hover:${social.color.replace("500", "500")}`}
+                  />
+                  <span
+                    className={`text-sm font-medium ${
+                      social.color
+                    } dark:${social.color.replace(
+                      "500",
+                      "400"
+                    )} group-hover:${social.color.replace(
+                      "500",
+                      "600"
+                    )} dark:group-hover:${social.color.replace("500", "500")}`}
+                  >
                     {social.label}
                   </span>
                   {social.followers && (
-                    <span className={`text-xs ${social.color} dark:${social.color.replace('500', '400')} bg-${social.color.split('-')[1]}-100/20 dark:bg-${social.color.split('-')[1]}-400/20 px-1.5 py-0.5 rounded-full`}>
+                    <span
+                      className={`text-xs ${
+                        social.color
+                      } dark:${social.color.replace("500", "400")} bg-${
+                        social.color.split("-")[1]
+                      }-100/20 dark:bg-${
+                        social.color.split("-")[1]
+                      }-400/20 px-1.5 py-0.5 rounded-full`}
+                    >
                       {social.followers}
                     </span>
                   )}
@@ -256,7 +334,7 @@ export default function HeroSection() {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             className="relative mx-auto"
           >
             <div className="relative w-60 h-60 sm:w-72 sm:h-72 md:w-80 md:h-80 lg:w-96 lg:h-96">
