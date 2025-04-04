@@ -1,4 +1,3 @@
-// app/admin/users/UserItem.js
 "use client";
 
 import { useState } from "react";
@@ -10,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Dialog,
-  DialogContent,
+  Dialogothers, DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -23,6 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { motion } from "framer-motion"; // Import Framer Motion
 
 export default function UserItem({ user: initialUser }) {
   const [user, setUser] = useState(initialUser);
@@ -37,8 +37,8 @@ export default function UserItem({ user: initialUser }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         isAdmin: editUser.isAdmin,
-        permissions: editUser.permissions, // Already an array from state
-        adminRole: editUser.adminRole, // Include adminRole in the update
+        permissions: editUser.permissions,
+        adminRole: editUser.adminRole,
       }),
     });
     if (res.ok) {
@@ -46,11 +46,11 @@ export default function UserItem({ user: initialUser }) {
       setUser(updatedUser);
       setLoading(false);
       setEditUser(null);
-      router.refresh(); // Refresh the page to reflect changes
+      router.refresh();
     } else {
       setLoading(false);
       const errorData = await res.json();
-      alert(`Error: ${errorData.error}`); // Basic error feedback
+      alert(`Error: ${errorData.error}`);
     }
   };
 
@@ -61,16 +61,40 @@ export default function UserItem({ user: initialUser }) {
     });
     if (res.ok) {
       setLoading(false);
-      router.refresh(); // Refresh the page to reflect deletion
+      router.refresh();
     } else {
       setLoading(false);
       const errorData = await res.json();
-      alert(`Error: ${errorData.error}`); // Basic error feedback
+      alert(`Error: ${errorData.error}`);
     }
   };
 
+  // Animation variants for the UserItem container
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+  };
+
+  // Animation variants for buttons
+  const buttonVariants = {
+    hover: { scale: 1.05, transition: { duration: 0.2 } },
+    tap: { scale: 0.95 },
+  };
+
+  // Animation variants for dialog
+  const dialogVariants = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.2 } },
+    exit: { opacity: 0, scale: 0.95, transition: { duration: 0.2 } },
+  };
+
   return (
-    <div className="flex items-center justify-between p-4 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+    <motion.div
+      className="flex items-center justify-between p-4 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+      variants={itemVariants}
+      initial="hidden"
+      animate="visible"
+    >
       <div className="flex items-center gap-4">
         <UserIcon className="h-8 w-8 text-primary" />
         <div>
@@ -80,7 +104,6 @@ export default function UserItem({ user: initialUser }) {
             {user.isAdmin && (
               <Badge variant="secondary">{user.adminRole || "Admin"}</Badge>
             )}
-            {/* Display permissions as small text labels */}
             {user.permissions && user.permissions.length > 0 && (
               <div className="flex flex-wrap gap-1">
                 {user.permissions.map((permission) => (
@@ -112,103 +135,116 @@ export default function UserItem({ user: initialUser }) {
       <div className="flex gap-2">
         <Dialog>
           <DialogTrigger asChild>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setEditUser(user)}
-            >
-              <Edit className="h-4 w-4" />
-            </Button>
+            <motion.div whileHover="hover" whileTap="tap" variants={buttonVariants}>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setEditUser(user)}
+              >
+                <Edit className="h-4 w-4" />
+              </Button>
+            </motion.div>
           </DialogTrigger>
-          <DialogContent className="sm:max-w-md">
-            <DialogHeader>
-              <DialogTitle>Edit User: {editUser?.name}</DialogTitle>
-            </DialogHeader>
-            {editUser && (
-              <div className="space-y-6 p-4">
-                <div className="flex items-center gap-2">
-                  <Checkbox
-                    id="isAdmin"
-                    checked={editUser.isAdmin}
-                    onCheckedChange={(checked) =>
-                      setEditUser({ ...editUser, isAdmin: checked })
-                    }
-                  />
-                  <Label htmlFor="isAdmin" className="text-sm">
-                    Admin Status
-                  </Label>
+          <motion.div
+            variants={dialogVariants}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+          >
+            <DialogContent className="sm:max-w-md">
+              <DialogHeader>
+                <DialogTitle>Edit User: {editUser?.name}</DialogTitle>
+              </DialogHeader>
+              {editUser && (
+                <div className="space-y-6 p-4">
+                  <div className="flex items-center gap-2">
+                    <Checkbox
+                      id="isAdmin"
+                      checked={editUser.isAdmin}
+                      onCheckedChange={(checked) =>
+                        setEditUser({ ...editUser, isAdmin: checked })
+                      }
+                    />
+                    <Label htmlFor="isAdmin" className="text-sm">
+                      Admin Status
+                    </Label>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="permissions" className="text-sm">
+                      Permissions (comma-separated)
+                    </Label>
+                    <Input
+                      id="permissions"
+                      placeholder="e.g., create,read,update,delete"
+                      value={editUser.permissions.join(", ")}
+                      onChange={(e) =>
+                        setEditUser({
+                          ...editUser,
+                          permissions: e.target.value.split(", ").filter(Boolean),
+                        })
+                      }
+                      className="border-gray-300 focus:ring-primary"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="adminRole" className="text-sm">
+                      Admin Role
+                    </Label>
+                    <Select
+                      value={editUser.adminRole || "null"}
+                      onValueChange={(value) =>
+                        setEditUser({
+                          ...editUser,
+                          adminRole: value === "null" ? null : value,
+                        })
+                      }
+                    >
+                      <SelectTrigger id="adminRole" className="border-gray-300">
+                        <SelectValue placeholder="Select admin role" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="null">None</SelectItem>
+                        <SelectItem value="superadmin">Superadmin</SelectItem>
+                        <SelectItem value="moderator">Moderator</SelectItem>
+                        <SelectItem value="content-manager">
+                          Content Manager
+                        </SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <motion.div whileHover="hover" whileTap="tap" variants={buttonVariants}>
+                    <Button
+                      onClick={handleUpdateUser}
+                      disabled={isloading}
+                      className="w-full bg-primary hover:bg-primary/90"
+                    >
+                      {isloading ? (
+                        <>
+                          <Loader2 className="h-4 w-4 animate-spin mr-2" />
+                          Saving...
+                        </>
+                      ) : (
+                        "Save"
+                      )}
+                    </Button>
+                  </motion.div>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="permissions" className="text-sm">
-                    Permissions (comma-separated)
-                  </Label>
-                  <Input
-                    id="permissions"
-                    placeholder="e.g., create,read,update,delete"
-                    value={editUser.permissions.join(", ")} // Display as string
-                    onChange={(e) =>
-                      setEditUser({
-                        ...editUser,
-                        permissions: e.target.value.split(", ").filter(Boolean), // Convert to array
-                      })
-                    }
-                    className="border-gray-300 focus:ring-primary"
-                  />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="adminRole" className="text-sm">
-                    Admin Role
-                  </Label>
-                  <Select
-                    value={editUser.adminRole || "null"} // Default to 'null' if undefined
-                    onValueChange={(value) =>
-                      setEditUser({
-                        ...editUser,
-                        adminRole: value === "null" ? null : value, // Convert 'null' string to actual null
-                      })
-                    }
-                  >
-                    <SelectTrigger id="adminRole" className="border-gray-300">
-                      <SelectValue placeholder="Select admin role" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="null">None</SelectItem>
-                      <SelectItem value="superadmin">Superadmin</SelectItem>
-                      <SelectItem value="moderator">Moderator</SelectItem>
-                      <SelectItem value="content-manager">
-                        Content Manager
-                      </SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                <Button
-                  onClick={handleUpdateUser}
-                  disabled={isloading}
-                  className="w-full bg-primary hover:bg-primary/90"
-                >
-                  {isloading ? (
-                    <>
-                      <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                      Saving...
-                    </>
-                  ) : (
-                    "Save"
-                  )}
-                </Button>
-              </div>
-            )}
-          </DialogContent>
+              )}
+            </DialogContent>
+          </motion.div>
         </Dialog>
-        
-        <Button
-          variant="destructive"
-          size="sm"
-          className="hover:bg-red-600"
-          onClick={handleDeleteUser}
-        >
-          <Trash2 className="h-4 w-4" />
-        </Button>
+
+        <motion.div whileHover="hover" whileTap="tap" variants={buttonVariants}>
+          <Button
+            variant="destructive"
+            size="sm"
+            className="hover:bg-red-600"
+            onClick={handleDeleteUser}
+          >
+            <Trash2 className="h-4 w-4" />
+          </Button>
+        </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 }

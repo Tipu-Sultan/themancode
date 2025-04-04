@@ -1,11 +1,10 @@
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import ClientProvider from "./ClientProvider";
-import { usePathname } from "next/navigation";
+import FooterWithRouteCheck from "./FooterWithRouteCheck";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,7 +28,7 @@ export default function RootLayout({ children }) {
             <Toaster />
             <Navbar />
             <main className="min-h-screen">{children}</main>
-            <Footer />
+            <FooterWithRouteCheck />
           </ClientProvider>
         </ThemeProvider>
       </body>

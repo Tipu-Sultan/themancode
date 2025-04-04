@@ -17,6 +17,7 @@ import {
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useSession } from 'next-auth/react';
+import { DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 
 export default function AdminLayout({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -91,7 +92,8 @@ export default function AdminLayout({ children }) {
         )}
       >
         <div className="p-4 py-16">
-          <h1 className="text-2xl font-bold mb-8">Admin Panel</h1>
+          <h1 className="text-2xl font-bold p-4">Admin Panel</h1>
+          <DropdownMenuSeparator />
           <nav className="space-y-2">
             {menuItems.map((item) => {
               const Icon = item.icon;
