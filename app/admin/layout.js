@@ -25,7 +25,7 @@ export default function AdminLayout({ children }) {
   const router = useRouter();
   const { data: session, status } = useSession();
 
-  if(!session && !session?.user?.isAdmin) {
+  if(!session && session?.user?.isAdmin !== true) {
     router.push('/');
   }
 
