@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { 
   LayoutDashboard, 
@@ -22,7 +22,12 @@ import { DropdownMenuSeparator } from '@/components/ui/dropdown-menu';
 export default function AdminLayout({ children }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
   const { data: session, status } = useSession();
+
+  if(!session && !session?.user?.isAdmin) {
+    router.push('/');
+  }
 
   // Loading state with skeleton
   if (status === 'loading') {
