@@ -3,5 +3,5 @@
 import ProjectForm from "@/components/admin/projects/ProjectForm";
 
 export default function CreateProjectPage() {
-  return <ProjectForm/>;
+  return <ProjectForm projectId={null} isEdit={true}/>;
 }

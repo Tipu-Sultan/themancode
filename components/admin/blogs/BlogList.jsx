@@ -1,4 +1,3 @@
-// components/admin/blogs/BlogList.jsx (or wherever you place it)
 'use client';
 
 import { useState, useEffect } from 'react';

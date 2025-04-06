@@ -1,4 +1,3 @@
-// app/admin/users/page.js
 import User from '@/models/User'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import UserItem from './UserItem'

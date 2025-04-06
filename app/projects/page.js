@@ -3,13 +3,11 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { fetchAllProjects } from '@/lib/server/client/api';
 import ProjectsPage from './ProjectsSection';
 
-// Convert MongoDB objects to plain values
 function serializeProjects(projects) {
   return projects.map((project) => ({
     ...project,
     _id: project._id.toString(), // Convert ObjectId to string
     createdAt: project.createdAt ? project.createdAt.toISOString() : null, // Convert Date to ISO string
-    // Add other fields if needed (e.g., updatedAt)
   }));
 }
 

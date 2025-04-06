@@ -16,7 +16,7 @@ const fadeInUp = {
   transition: { duration: 0.5, ease: 'easeOut' }
 };
 
-export default function ProjectForm({ projectId, isEdit = false }) {
+export default function ProjectForm({ projectId=null, isEdit = false }) {
   const router = useRouter();
   const { toast } = useToast();
   const [formData, setFormData] = useState({

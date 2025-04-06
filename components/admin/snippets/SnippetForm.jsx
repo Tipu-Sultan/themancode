@@ -17,7 +17,7 @@ const fadeInUp = {
   transition: { duration: 0.5, ease: 'easeOut' }
 };
 
-export default function SnippetForm({ snippetId, isEdit = false }) {
+export default function SnippetForm({ snippetId = null, isEdit = false }) {
   const router = useRouter();
   const { toast } = useToast();
   const [formData, setFormData] = useState({

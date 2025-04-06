@@ -96,7 +96,7 @@ export default function MobileNav({ navItems, setIsOpen, user }) {
                 {user && user.isAdmin && (
                   <motion.div variants={itemVariants} initial="hidden" animate="visible">
                     <Link
-                      href="/admin"
+                      href="/admin/dashboard"
                       className="block px-4 py-3 text-lg font-medium text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-900 rounded-md transition-colors flex items-center gap-3"
                       onClick={() => setIsOpen(false)}
                     >
