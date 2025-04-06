@@ -4,5 +4,5 @@ import SnippetForm from "@/components/admin/snippets/SnippetForm";
 
 
 export default function CreateSnippetPage() {
-  return <SnippetForm snippetId={null} isEdit={true} />;
+  return <SnippetForm snippetId={null} isEdit={false} />;
 }
