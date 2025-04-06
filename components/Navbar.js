@@ -73,9 +73,9 @@ export default function Navbar() {
 
             {/* Mobile/Tablet Right Section */}
             <div className="lg:hidden flex items-center gap-4">
+              <ModeToggle />
               {status === "authenticated" ? (
                 <>
-                  <ModeToggle />
                   {session?.user?.isAdmin && (
                     <Button
                       asChild

@@ -38,6 +38,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'www.google.com',
       },
+      {
+        protocol: 'http',
+        hostname: 'farman-pharma.ct.ws',
+      },
     ],
   },
 };

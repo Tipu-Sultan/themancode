@@ -44,9 +44,9 @@ export default function DesktopNav({ navItems,user,status,handleSignIn,setShowSi
 
       {/* Right Section */}
       <div className="flex-1 flex items-center justify-end gap-4">
+        <ModeToggle />
         {status === 'authenticated' ? (
           <>
-            <ModeToggle />
             {isAdmin && (
               <Button
                 asChild
