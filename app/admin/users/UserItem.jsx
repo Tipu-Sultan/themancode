@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Dialog,
-  Dialogothers, DialogContent,
+  DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -22,84 +22,116 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { motion } from "framer-motion"; // Import Framer Motion
+import { motion } from "framer-motion";
+import { useToast } from "@/hooks/use-toast";
 
-export default function UserItem({ user: initialUser }) {
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
+};
+
+const buttonVariants = {
+  hover: { scale: 1.05, transition: { duration: 0.2 } },
+  tap: { scale: 0.95 },
+};
+
+const dialogVariants = {
+  hidden: { opacity: 0, scale: 0.95 },
+  visible: { opacity: 1, scale: 1, transition: { duration: 0.2 } },
+  exit: { opacity: 0, scale: 0.95, transition: { duration: 0.2 } },
+};
+
+export default function UserItem({ user: initialUser, setUsers }) {
   const [user, setUser] = useState(initialUser);
   const [editUser, setEditUser] = useState(null);
-  const [isloading, setLoading] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { toast } = useToast();
 
   const handleUpdateUser = async () => {
-    setLoading(true);
-    const res = await fetch(`/api/admin/users/${editUser._id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        isAdmin: editUser.isAdmin,
-        permissions: editUser.permissions,
-        adminRole: editUser.adminRole,
-      }),
-    });
-    if (res.ok) {
-      const updatedUser = await res.json();
-      setUser(updatedUser);
-      setLoading(false);
-      setEditUser(null);
-      router.refresh();
-    } else {
-      setLoading(false);
-      const errorData = await res.json();
-      alert(`Error: ${errorData.error}`);
+    setIsLoading(true);
+    try {
+      const res = await fetch(`/api/admin/users/${editUser._id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          isAdmin: editUser.isAdmin,
+          permissions: editUser.permissions,
+          adminRole: editUser.adminRole,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setUser(data);
+        setUsers((prev) =>
+          prev.map((u) => (u._id === data._id ? data : u))
+        );
+        setEditUser(null);
+        toast({
+          title: "Success",
+          description: "User updated successfully!",
+        });
+        router.refresh();
+      } else {
+        toast({
+          title: "Error",
+          description: data.error || "Failed to update user",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "An error occurred while updating the user",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleDeleteUser = async () => {
-    setLoading(true);
-    const res = await fetch(`/api/admin/users/${user._id}`, {
-      method: "DELETE",
-    });
-    if (res.ok) {
-      setLoading(false);
-      router.refresh();
-    } else {
-      setLoading(false);
-      const errorData = await res.json();
-      alert(`Error: ${errorData.error}`);
+    setIsLoading(true);
+    try {
+      const res = await fetch(`/api/admin/users/${user._id}`, {
+        method: "DELETE",
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setUsers((prev) => prev.filter((u) => u._id !== user._id));
+        toast({
+          title: "Success",
+          description: "User deleted successfully!",
+        });
+        router.refresh();
+      } else {
+        toast({
+          title: "Error",
+          description: data.error || "Failed to delete user",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "An error occurred while deleting the user",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
     }
-  };
-
-  // Animation variants for the UserItem container
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
-  };
-
-  // Animation variants for buttons
-  const buttonVariants = {
-    hover: { scale: 1.05, transition: { duration: 0.2 } },
-    tap: { scale: 0.95 },
-  };
-
-  // Animation variants for dialog
-  const dialogVariants = {
-    hidden: { opacity: 0, scale: 0.95 },
-    visible: { opacity: 1, scale: 1, transition: { duration: 0.2 } },
-    exit: { opacity: 0, scale: 0.95, transition: { duration: 0.2 } },
   };
 
   return (
     <motion.div
       className="flex items-center justify-between p-4 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow"
       variants={itemVariants}
-      initial="hidden"
-      animate="visible"
     >
       <div className="flex items-center gap-4">
         <UserIcon className="h-8 w-8 text-primary" />
         <div>
           <h3 className="text-lg font-medium">{user.name}</h3>
-          <p className="text-sm">{user.email}</p>
+          <p className="text-sm text-muted-foreground">{user.email}</p>
           <div className="mt-1 flex flex-wrap gap-2">
             {user.isAdmin && (
               <Badge variant="secondary">{user.adminRole || "Admin"}</Badge>
@@ -140,6 +172,7 @@ export default function UserItem({ user: initialUser }) {
                 variant="outline"
                 size="sm"
                 onClick={() => setEditUser(user)}
+                disabled={isLoading}
               >
                 <Edit className="h-4 w-4" />
               </Button>
@@ -215,10 +248,10 @@ export default function UserItem({ user: initialUser }) {
                   <motion.div whileHover="hover" whileTap="tap" variants={buttonVariants}>
                     <Button
                       onClick={handleUpdateUser}
-                      disabled={isloading}
+                      disabled={isLoading}
                       className="w-full bg-primary hover:bg-primary/90"
                     >
-                      {isloading ? (
+                      {isLoading ? (
                         <>
                           <Loader2 className="h-4 w-4 animate-spin mr-2" />
                           Saving...
@@ -240,8 +273,13 @@ export default function UserItem({ user: initialUser }) {
             size="sm"
             className="hover:bg-red-600"
             onClick={handleDeleteUser}
+            disabled={isLoading}
           >
-            <Trash2 className="h-4 w-4" />
+            {isLoading ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Trash2 className="h-4 w-4" />
+            )}
           </Button>
         </motion.div>
       </div>

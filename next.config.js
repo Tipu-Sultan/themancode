@@ -34,6 +34,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'uppcr.vercel.app',
       },
+      {
+        protocol: 'https',
+        hostname: 'www.google.com',
+      },
     ],
   },
 };

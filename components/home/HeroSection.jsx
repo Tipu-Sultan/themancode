@@ -46,9 +46,6 @@ export default function HeroSection() {
   const [currentRoleIndex, setCurrentRoleIndex] = useState(0);
   const roles = ["Next.js", "Mern.js", "Web Developer", "Full-stack Developer"];
 
-  console.log(process.env.NEXTAUTH_SECRET);
-  console.log("SECRET:", process.env.NEXTAUTH_SECRET);
-
   const socials = [
     {
       icon: Github,
