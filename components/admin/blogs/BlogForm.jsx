@@ -152,7 +152,7 @@ export default function BlogForm({ blogId = null, isEdit = false }) {
           <div>
             <label className="block text-sm font-medium mb-1">Content</label>
             <Editor
-              apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY} // Get from TinyMCE website
+              apiKey={process.env.TINYMCE_API_KEY} // Get from TinyMCE website
               value={formData.content}
               onEditorChange={(content) => setFormData({ ...formData, content })}
               init={{

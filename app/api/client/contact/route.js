@@ -11,7 +11,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const RECAPTCHA_SECRET_KEY = process.env.NEXT_PUBLIC_CAPTCHA_SECRET_KEY;
+const RECAPTCHA_SECRET_KEY = process.env.CAPTCHA_SECRET_KEY;
 
 export async function POST(request) {
   try {
