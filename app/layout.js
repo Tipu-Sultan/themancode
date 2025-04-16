@@ -5,6 +5,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import ClientProvider from "./ClientProvider";
 import FooterWithRouteCheck from "./FooterWithRouteCheck";
+import { Analytics } from "@vercel/analytics/react"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({ children }) {
           enableSystem
           disableTransitionOnChange
         >
+          <Analytics/>
           <ClientProvider>
             <Toaster />
             <Navbar />
