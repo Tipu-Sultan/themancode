@@ -1,3 +1,5 @@
+export const revalidate = 60; // Revalidate every 60 seconds
+
 import { Suspense } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { fetchAllProjects } from '@/lib/server/client/api';
@@ -6,14 +8,14 @@ import ProjectsPage from './ProjectsSection';
 function serializeProjects(projects) {
   return projects.map((project) => ({
     ...project,
-    _id: project._id.toString(), // Convert ObjectId to string
-    createdAt: project.createdAt ? project.createdAt.toISOString() : null, // Convert Date to ISO string
+    _id: project._id.toString(),
+    createdAt: project.createdAt ? project.createdAt.toISOString() : null,
   }));
 }
 
 export default async function Page() {
   const rawProjects = await fetchAllProjects();
-  const projects = serializeProjects(rawProjects); // Serialize data
+  const projects = serializeProjects(rawProjects);
 
   return (
     <div>
@@ -35,4 +37,3 @@ export default async function Page() {
     </div>
   );
 }
-

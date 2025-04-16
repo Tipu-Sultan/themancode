@@ -1,44 +1,57 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import Image from "next/image";
-import Link from "next/link";
-import { ExternalLink, Github, ArrowLeft } from "lucide-react";
-import { usePathname, useRouter } from "next/navigation";
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import Image from 'next/image';
+import Link from 'next/link';
+import { ExternalLink, Github, ArrowLeft } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
+import useSWR from 'swr';
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
+} from '@/components/ui/tooltip';
 
 const categories = [
-  "All",
-  "Full-Stack Development",
-  "Web Development",
-  "Frontend",
-  "AI/ML",
-  "Mobile",
+  'All',
+  'Full-Stack Development',
+  'Web Development',
+  'Frontend',
+  'AI/ML',
+  'Mobile',
 ];
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.5, ease: "easeOut" },
+  transition: { duration: 0.5, ease: 'easeOut' },
 };
 
-export default function ProjectsPage({ projects }) {
+const fetcher = (url) => fetch(url).then((res) => res.json());
+
+export default function ProjectsPage({ projects: initialProjects }) {
   const pathname = usePathname();
   const router = useRouter();
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState('All');
+
+  // Fetch projects client-side
+  const { data: projects, error } = useSWR('/api/projects', fetcher, {
+    fallbackData: initialProjects,
+    refreshInterval: 60000, // Poll every 60 seconds
+  });
+
+  if (error) {
+    console.error('Error fetching projects:', error);
+  }
 
   const filteredProjects =
-    selectedCategory === "All"
-      ? projects
-      : projects.filter(
+    selectedCategory === 'All'
+      ? projects || initialProjects
+      : (projects || initialProjects).filter(
           (project) =>
             project.category.toLowerCase() === selectedCategory.toLowerCase()
         );
@@ -47,7 +60,7 @@ export default function ProjectsPage({ projects }) {
     <section className="py-12 md:py-16 bg-gradient-to-br from-background via-muted/10 to-background">
       <div className="container max-w-6xl mx-auto px-4 sm:px-6">
         {/* Back Button */}
-        {pathname !== "/" && (
+        {pathname !== '/' && (
           <motion.div
             variants={fadeInUp}
             initial="initial"
@@ -91,11 +104,11 @@ export default function ProjectsPage({ projects }) {
           {categories.map((category) => (
             <Button
               key={category}
-              variant={selectedCategory === category ? "default" : "outline"}
+              variant={selectedCategory === category ? 'default' : 'outline'}
               className={`rounded-full px-3 py-1 text-sm transition-all duration-300 ${
                 selectedCategory === category
-                  ? "shadow-lg"
-                  : "hover:bg-muted/50 hover:shadow-md"
+                  ? 'shadow-lg'
+                  : 'hover:bg-muted/50 hover:shadow-md'
               }`}
               onClick={() => setSelectedCategory(category)}
             >
@@ -122,8 +135,8 @@ export default function ProjectsPage({ projects }) {
                       src={project.image}
                       alt={project.title}
                       fill
-                      className="object-cover" // Ensures proper fit without zooming
-                      priority={index < 3} // Prioritize first 3 images for LCP
+                      className="object-cover"
+                      priority={index < 3}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-90" />
                     <span className="absolute top-2 right-2 bg-primary/10 text-xs px-2 py-1 rounded-full text-white">
