@@ -6,11 +6,13 @@ import { fetchAllProjects } from '@/lib/server/client/api';
 import ProjectsPage from './ProjectsSection';
 
 function serializeProjects(projects) {
-  return projects.map((project) => ({
-    ...project,
-    _id: project._id.toString(),
-    createdAt: project.createdAt ? project.createdAt.toISOString() : null,
-  }));
+  return projects
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)) // Sort by createdAt in descending order
+    .map((project) => ({
+      ...project,
+      _id: project._id.toString(),
+      createdAt: project.createdAt ? project.createdAt.toISOString() : null,
+    }));
 }
 
 export default async function Page() {
