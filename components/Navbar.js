@@ -56,6 +56,7 @@ export default function Navbar() {
     { href: "/projects", label: "Projects" },
     { href: "/blog", label: "Blog" },
     { href: "/snippets", label: "Snippets" },
+    { href: "/videos", label: "Videos" },
     { href: "/contact", label: "Contact" },
   ];
 
