@@ -3,7 +3,7 @@
 import { SessionProvider } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import { GoogleReCaptchaProvider } from 'react-google-recaptcha-v3';
-const siteKey = process.env.RECAPTCHA_SITE_KEY;
+const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY;
 if (!siteKey) {
   throw new Error('Please define the RECAPTCHA_SITE_KEY environment variable');
 }
