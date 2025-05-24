@@ -1,6 +1,5 @@
 'use client';
 import Link from 'next/link';
-import { signOut } from 'next-auth/react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -10,7 +9,6 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { ModeToggle } from '../mode-toggle';
 import { Button } from '@/components/ui/button';
-import { useRouter, usePathname } from 'next/navigation';
 
 export default function DesktopNav({ navItems,user,status,handleSignIn,setShowSignOutDialog,isActiveLink }) {
   const isAdmin = user?.isAdmin;

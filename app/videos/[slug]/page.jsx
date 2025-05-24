@@ -1,3 +1,4 @@
+// app/videos/[slug]/page.js
 import { notFound } from 'next/navigation';
 import { fetchVideoBySlug } from '@/lib/server/client/videos';
 import { Suspense } from 'react';
@@ -15,7 +16,7 @@ function serializeVideo(data) {
       likes: Array.isArray(video?.likes)
         ? video.likes.map((like) => ({
             ...like,
-            _id: like._id ? like._id.toString() : null, // Explicitly serialize _id
+            _id: like._id ? like._id.toString() : null,
             userId: like?.userId?.toString(),
             createdAt: like?.createdAt ? new Date(like.createdAt).toISOString() : null,
           }))

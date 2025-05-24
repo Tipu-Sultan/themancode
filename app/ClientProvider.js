@@ -10,11 +10,9 @@ if (!siteKey) {
 
 export default function ClientProvider({ children }) {
   return (
-    
     <SessionProvider>
       <GoogleReCaptchaProvider reCaptchaKey={siteKey}>
         {children}
-
       </GoogleReCaptchaProvider>
     </SessionProvider>
   );

@@ -30,7 +30,6 @@ export default function RootLayout({ children }) {
             <Toaster />
             <Navbar />
             <main className="min-h-screen">{children}</main>
-            <FooterWithRouteCheck />
           </ClientProvider>
         </ThemeProvider>
       </body>

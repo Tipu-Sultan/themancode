@@ -1,8 +1,9 @@
+// components/Footer.jsx
 import { Github, Instagram, Linkedin } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="border-t py-8 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white">
+    <footer className="border-t py-8 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-white relative z-60">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           {/* Left Section - Branding */}
@@ -23,7 +24,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="group flex items-center gap-2 text-sm font-medium hover:text-yellow-400 transition-all duration-300"
             >
-              <Github/>
+              <Github />
               GitHub
             </a>
             <a
@@ -32,7 +33,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="group flex items-center gap-2 text-sm font-medium hover:text-yellow-400 transition-all duration-300"
             >
-              <Linkedin/>
+              <Linkedin />
               LinkedIn
             </a>
             <a
@@ -41,7 +42,7 @@ export default function Footer() {
               rel="noopener noreferrer"
               className="group flex items-center gap-2 text-sm font-medium hover:text-yellow-400 transition-all duration-300"
             >
-              <Instagram/>
+              <Instagram />
               Instagram
             </a>
           </div>

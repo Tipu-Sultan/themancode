@@ -1,3 +1,4 @@
+// app/videos/page.js
 export const revalidate = 60;
 
 import { Suspense } from 'react';
@@ -5,7 +6,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { fetchAllVideos } from '@/lib/server/client/videos';
 import VideosList from './VideosList';
 
-// Reuse the serializeVideos function as is
+// Reuse serializeVideos function as is
 function serializeVideos(data) {
   const { videos, comments } = data;
   return {

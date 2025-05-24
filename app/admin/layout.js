@@ -78,7 +78,7 @@ export default function AdminLayout({ children }) {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen pb-16 lg:pb-0 bg-background">
       {/* Mobile Sidebar Toggle */}
       <div className="md:hidden fixed top-20 left-4 z-50">
         <Button

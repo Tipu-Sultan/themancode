@@ -1,9 +1,11 @@
+// app/videos/VideosList.jsx
 'use client';
 
 import { motion } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Heart, MessageCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { CldImage } from 'next-cloudinary';
 
 const fadeInUp = {
   initial: { opacity: 0, y: 20 },
@@ -29,10 +31,15 @@ export default function VideosList({ videos, comments }) {
         >
           <Card className="overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
             <CardContent className="p-0">
-              <img
-                src={video.thumbnailUrl}
+              <CldImage
+                src={video.thumbnailPublicId} // e.g., themancode/thumbnails/oyydlvv7mewij0kkqwdu
+                width={640}
+                height={360}
                 alt={video.title}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 className="aspect-video w-full object-cover rounded-t-xl"
+                format="auto"
+                quality="auto"
               />
               <div className="p-4">
                 <h3 className="text-base sm:text-lg font-bold mb-2 line-clamp-1">

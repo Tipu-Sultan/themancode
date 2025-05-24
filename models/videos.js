@@ -89,7 +89,7 @@ const videoSchema = new Schema(
     timestamps: true,
   }
 );
-
+videoSchema.index({ slug: 1 });
 videoSchema.index({ createdAt: -1 });
 videoSchema.index({ category: 1 });
 
