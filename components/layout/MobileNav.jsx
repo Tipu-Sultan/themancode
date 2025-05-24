@@ -4,7 +4,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
-import { Home, Folder, Book, Code, Mail, Menu, User, Shield, MenuIcon } from 'lucide-react';
+import { Home, Folder, Book, Code, Mail, Menu, User, Shield, MenuIcon, Video } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
@@ -14,6 +14,7 @@ export default function MobileNav({ navItems, setIsOpen, user }) {
     Projects: <Folder className="h-5 w-5" />,
     Blog: <Book className="h-5 w-5" />,
     Snippets: <Code className="h-5 w-5" />,
+    Videos: <Video className="h-5 w-5" />,
     Contact: <Mail className="h-5 w-5" />,
   };
 
