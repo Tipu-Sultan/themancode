@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
 import { ModeToggle } from './mode-toggle';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
@@ -31,7 +30,6 @@ export default function Navbar() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const [showSignOutDialog, setShowSignOutDialog] = useState(false);
 
   const handleSignOut = async () => {
@@ -39,8 +37,7 @@ export default function Navbar() {
   };
 
   const handleSignIn = () => {
-    const redirect = searchParams.get('redirect') || pathname;
-    router.push(`/login?redirect=${encodeURIComponent(redirect)}`);
+    router.push(`/login`);
   };
 
   const isActiveLink = (href) => {
