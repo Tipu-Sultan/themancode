@@ -1,4 +1,3 @@
-// app/videos/VideosList.jsx
 'use client';
 
 import { motion } from 'framer-motion';
@@ -13,7 +12,7 @@ const fadeInUp = {
   transition: { duration: 0.5, ease: 'easeOut' },
 };
 
-export default function VideosList({ videos, comments }) {
+export default function VideosList({ videos }) {
   const router = useRouter();
 
   return (
@@ -32,7 +31,7 @@ export default function VideosList({ videos, comments }) {
           <Card className="overflow-hidden rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
             <CardContent className="p-0">
               <CldImage
-                src={video.thumbnailPublicId} // e.g., themancode/thumbnails/oyydlvv7mewij0kkqwdu
+                src={video.thumbnailPublicId}
                 width={640}
                 height={360}
                 alt={video.title}
@@ -55,7 +54,7 @@ export default function VideosList({ videos, comments }) {
                   </span>
                   <span className="flex items-center gap-1">
                     <MessageCircle className="w-4 h-4" />
-                    {comments.filter((c) => c.videoId === video._id).length}
+                    {video.commentCount || 0}
                   </span>
                 </div>
               </div>

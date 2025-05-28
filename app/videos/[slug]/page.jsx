@@ -37,7 +37,7 @@ export default async function VideoDetailPage({ params }) {
   const rawData = await fetchVideoBySlug(slug);
   if (!rawData.video) return notFound();
 
-  const { video, comments } = await serializeVideo(rawData);
+  const { video, comments } =  serializeVideo(rawData);
 
   return (
     <section className="py-12 md:py-16 bg-gradient-to-br from-background via-muted/10 to-background">

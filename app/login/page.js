@@ -7,24 +7,24 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Loader2 } from 'lucide-react'
 import { motion } from 'framer-motion'
 import Image from 'next/image'
+import { useSearchParams } from 'next/navigation'
 
 export default function Login() {
   const [isLoading, setIsLoading] = useState(false)
+  const searchParams = useSearchParams() 
 
-  // Handle Google Sign-In
   const handleGoogleSignIn = async () => {
     setIsLoading(true)
     try {
-      await signIn('google', { callbackUrl: '/admin/dashboard' })
+      const callbackUrl = searchParams.get('redirect') || window.location.pathname || '/'
+      await signIn('google', { callbackUrl })
     } catch (error) {
-      setIsLoading(false) // Reset loading on error
+      setIsLoading(false) 
     }
-    // Note: Loading state will persist until redirect occurs on success
   }
 
   return (
     <section className="min-h-[calc(100vh-4rem)] flex items-center justify-center bg-gradient-to-br from-background via-muted/20 to-background py-10 px-4 sm:px-6 lg:px-8">
-      {/* Animated Card */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -32,7 +32,6 @@ export default function Login() {
         className="w-full max-w-xs sm:max-w-sm md:max-w-md"
       >
         <Card className="bg-card/95 backdrop-blur-md border-none shadow-2xl overflow-hidden">
-          {/* Subtle Gradient Overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-primary/5 to-transparent pointer-events-none" />
 
           <CardHeader className="space-y-3 text-center pb-4">
@@ -51,7 +50,6 @@ export default function Login() {
           </CardHeader>
 
           <CardContent className="space-y-6 px-6 sm:px-8 py-8">
-            {/* Google Sign-In Button */}
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}

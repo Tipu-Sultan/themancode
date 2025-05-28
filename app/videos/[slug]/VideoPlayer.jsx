@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -9,7 +9,6 @@ import { useSession } from 'next-auth/react';
 import { toast } from '@/hooks/use-toast';
 import { CldVideoPlayer } from 'next-cloudinary';
 import 'cloudinary-video-player/cld-video-player.min.css';
-
 import { ErrorBoundary } from 'react-error-boundary';
 
 const fadeInUp = {
@@ -29,12 +28,15 @@ const VideoErrorFallback = ({ error }) => (
   </div>
 );
 
-export default function VideoPlayer({ video, comments: initialComments }) {
-  const { data: session } = useSession();
+export default function VideoPlayer({ video, comments: initialComments, totalComments }) {
+  const { data: session, status } = useSession();
   const [commentText, setCommentText] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isDeleting, setIsDeleting] = useState(null);
   const [localComments, setLocalComments] = useState(initialComments);
+  const [commentPage, setCommentPage] = useState(1);
+  const [hasMoreComments, setHasMoreComments] = useState(totalComments > initialComments.length);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [likeState, setLikeState] = useState({
     likeCount: video.likeCount || 0,
     liked: session?.user?.id && video?.likes
@@ -43,6 +45,7 @@ export default function VideoPlayer({ video, comments: initialComments }) {
   });
 
   const handleCommentSubmit = async () => {
+    if (status === 'loading') return;
     if (!session) {
       return toast({
         title: 'Please sign in to comment',
@@ -70,13 +73,14 @@ export default function VideoPlayer({ video, comments: initialComments }) {
       });
       if (response.ok) {
         const newComment = await response.json();
-        setLocalComments((prev) => [...prev, newComment]);
+        setLocalComments((prev) => [newComment, ...prev]);
         setCommentText('');
         toast({ title: 'Comment added!', variant: 'default' });
       } else {
         throw new Error('Failed to add comment');
       }
     } catch (error) {
+      console.error('Comment Submit Error:', error);
       toast({ title: 'Error adding comment', variant: 'destructive' });
     } finally {
       setIsSubmitting(false);
@@ -84,6 +88,7 @@ export default function VideoPlayer({ video, comments: initialComments }) {
   };
 
   const handleDeleteComment = async (commentId) => {
+    if (status === 'loading') return;
     if (!session) {
       return toast({
         title: 'Please sign in to delete comments',
@@ -109,6 +114,7 @@ export default function VideoPlayer({ video, comments: initialComments }) {
         throw new Error(data.message || 'Failed to delete comment');
       }
     } catch (error) {
+      console.error('Delete Comment Error:', error);
       toast({
         title: 'Error deleting comment',
         description: error.message,
@@ -120,6 +126,7 @@ export default function VideoPlayer({ video, comments: initialComments }) {
   };
 
   const handleLike = async () => {
+    if (status === 'loading') return;
     if (!session) {
       return toast({ title: 'Please sign in to like', variant: 'destructive' });
     }
@@ -138,6 +145,7 @@ export default function VideoPlayer({ video, comments: initialComments }) {
         throw new Error('Failed to toggle like');
       }
     } catch (error) {
+      console.error('Like Error:', error);
       toast({ title: 'Error toggling like', variant: 'destructive' });
     }
   };
@@ -148,6 +156,36 @@ export default function VideoPlayer({ video, comments: initialComments }) {
     toast({ title: 'Video URL copied to clipboard!', variant: 'default' });
   };
 
+  const loadMoreComments = useCallback(async () => {
+    if (isLoadingMore || !hasMoreComments) return;
+
+    try {
+      setIsLoadingMore(true);
+      const skip = commentPage * 10;
+      const response = await fetch(`/api/client/videos/comments/${video._id}?skip=${skip}&limit=10`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      if (response.ok) {
+        const newComments = await response.json();
+        setLocalComments((prev) => [...prev, ...newComments]);
+        setCommentPage((prev) => prev + 1);
+        setHasMoreComments(newComments.length === 10);
+      } else {
+        throw new Error('Failed to load more comments');
+      }
+    } catch (error) {
+      console.error('Load More Comments Error:', error);
+      toast({ title: 'Error loading more comments', variant: 'destructive' });
+    } finally {
+      setIsLoadingMore(false);
+    }
+  }, [commentPage, hasMoreComments, video._id]);
+
+  if (!video || !video.slug || !video.videoPublicId) {
+    return <VideoErrorFallback error={{ message: 'Invalid video data' }} />;
+  }
+
   return (
     <motion.div
       variants={fadeInUp}
@@ -155,17 +193,16 @@ export default function VideoPlayer({ video, comments: initialComments }) {
       animate="animate"
       className="space-y-8"
     >
-      {/* Video Player */}
       <ErrorBoundary FallbackComponent={VideoErrorFallback}>
         <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border bg-black">
           <CldVideoPlayer
             id={video.slug}
-            src={video.videoPublicId} // e.g., themancode/videos/ikns0qr1djub24y1qpl5
+            src={video.videoPublicId}
             width={1280}
             height={720}
             controls
             className="w-full aspect-video"
-            poster={video.thumbnailPublicId} // e.g., themancode/thumbnails/oyydlvv7mewij0kkqwdu
+            poster={video.thumbnailPublicId}
             autoPlay={false}
             transformation={{
               fetch_format: 'auto',
@@ -181,7 +218,6 @@ export default function VideoPlayer({ video, comments: initialComments }) {
         </div>
       </ErrorBoundary>
 
-      {/* Video Info */}
       <div className="space-y-4">
         <h1 className="text-2xl sm:text-3xl font-bold leading-tight">{video.title}</h1>
         <div className="flex flex-wrap gap-2">
@@ -206,7 +242,6 @@ export default function VideoPlayer({ video, comments: initialComments }) {
         )}
       </div>
 
-      {/* Actions */}
       <div className="flex flex-wrap items-center gap-4">
         <Button
           variant="outline"
@@ -214,6 +249,7 @@ export default function VideoPlayer({ video, comments: initialComments }) {
           onClick={handleLike}
           className="group flex items-center gap-2 border-2 hover:bg-primary/10 transition-all duration-300"
           aria-label={likeState.liked ? 'Unlike video' : 'Like video'}
+          disabled={status === 'loading'}
         >
           <Heart
             className={`w-5 h-5 transition-transform duration-300 group-hover:scale-110 ${
@@ -236,9 +272,8 @@ export default function VideoPlayer({ video, comments: initialComments }) {
         </Button>
       </div>
 
-      {/* Comments Section */}
       <div className="border-t pt-8">
-        <h2 className="text-xl font-semibold mb-6">Comments ({localComments.length})</h2>
+        <h2 className="text-xl font-semibold mb-6">Comments ({totalComments})</h2>
         <div
           className="space-y-4 max-h-[500px] overflow-y-auto p-6 bg-muted/10 rounded-2xl scrollbar-thin scrollbar-thumb-muted scrollbar-track-transparent"
         >
@@ -266,7 +301,7 @@ export default function VideoPlayer({ video, comments: initialComments }) {
                     variant="ghost"
                     size="sm"
                     onClick={() => handleDeleteComment(comment._id)}
-                    disabled={isDeleting === comment._id}
+                    disabled={isDeleting === comment._id || status === 'loading'}
                     className="text-red-500 hover:text-red-600 hover:bg-red-50 ml-3 transition-colors duration-200"
                     aria-label="Delete comment"
                   >
@@ -281,22 +316,35 @@ export default function VideoPlayer({ video, comments: initialComments }) {
             ))
           )}
         </div>
+        {hasMoreComments && (
+          <Button
+            variant="outline"
+            size="lg"
+            onClick={loadMoreComments}
+            disabled={isLoadingMore}
+            className="mt-4 w-full rounded-xl"
+          >
+            {isLoadingMore ? (
+              <Loader2 className="w-5 h-5 animate-spin mr-2" />
+            ) : null}
+            Load More Comments
+          </Button>
+        )}
 
-        {/* Comment Input */}
         <div className="mt-8 flex gap-4">
           <Input
             placeholder="Add a comment..."
             value={commentText}
             onChange={(e) => setCommentText(e.target.value)}
             className="flex-1 rounded-xl border-2 border-muted focus:border-primary py-3 text-base transition-colors duration-200"
-            disabled={isSubmitting}
+            disabled={isSubmitting || status === 'loading'}
             aria-label="Comment input"
           />
           <Button
             size="lg"
             onClick={handleCommentSubmit}
             className="rounded-xl bg-primary hover:bg-primary/90 px-6 transition-transform duration-200 hover:scale-105"
-            disabled={!commentText.trim() || isSubmitting}
+            disabled={!commentText.trim() || isSubmitting || status === 'loading'}
             aria-label="Post comment"
           >
             <Send className="w-5 h-5 mr-2" />

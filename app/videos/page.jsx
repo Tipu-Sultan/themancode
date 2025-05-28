@@ -1,4 +1,3 @@
-// app/videos/page.js
 export const revalidate = 60;
 
 import { Suspense } from 'react';
@@ -6,37 +5,21 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { fetchAllVideos } from '@/lib/server/client/videos';
 import VideosList from './VideosList';
 
-// Reuse serializeVideos function as is
 function serializeVideos(data) {
-  const { videos, comments } = data;
+  const { videos } = data;
   return {
     videos: videos.map((video) => ({
       ...video,
       _id: video._id.toString(),
       createdAt: video.createdAt ? new Date(video.createdAt).toISOString() : null,
       updatedAt: video.updatedAt ? new Date(video.updatedAt).toISOString() : null,
-      likes: Array.isArray(video?.likes)
-        ? video.likes.map((like) => ({
-            ...like,
-            userId: like?.userId?.toString(),
-            createdAt: like?.createdAt ? new Date(like.createdAt).toISOString() : null,
-          }))
-        : [],
-    })),
-    comments: comments.map((comment) => ({
-      ...comment,
-      _id: comment._id.toString(),
-      videoId: comment.videoId.toString(),
-      userId: comment.userId.toString(),
-      createdAt: comment.createdAt ? new Date(comment.createdAt).toISOString() : null,
-      updatedAt: comment.updatedAt ? new Date(comment.updatedAt).toISOString() : null,
     })),
   };
 }
 
 export default async function VideosPage() {
   const rawData = await fetchAllVideos();
-  const { videos, comments } = serializeVideos(rawData);
+  const { videos } = serializeVideos(rawData);
 
   return (
     <section className="py-12 md:py-16 bg-gradient-to-br from-background via-muted/10 to-background">
@@ -58,7 +41,7 @@ export default async function VideosPage() {
             </div>
           }
         >
-          <VideosList videos={videos} comments={comments} />
+          <VideosList videos={videos} />
         </Suspense>
       </div>
     </section>
