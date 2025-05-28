@@ -41,6 +41,7 @@ export default function Navbar() {
     router.push(`/login`);
   };
 
+  // Function to check if a link should be highlighted
   const isActiveLink = (href) => {
     if (href === '/' && pathname === '/') return true;
     if (href !== '/' && pathname.startsWith(href)) return true;
@@ -57,78 +58,80 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="border-b sticky top-0 bg-gray-50/95 backdrop-blur supports-[backdrop-filter]:bg-gray-50/60 z-50">
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <Link href="/" className="text-xl font-bold text-gray-900">
-            RideMarket
-          </Link>
+    <>
+      <nav className="border-b sticky top-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50 ">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo */}
+            <Link href="/" className="text-xl font-bold">
+              Tipu.Sultan
+            </Link>
 
-          {/* Mobile/Tablet Right Section */}
-          <div className="lg:hidden flex items-center gap-4">
-            <ModeToggle />
-            {status === 'authenticated' ? (
-              <>
-                {session?.user?.isAdmin && (
-                  <Button
-                    asChild
-                    variant="outline"
-                    className={`transition-colors ${
-                      isActiveLink('/admin/dashboard')
-                        ? 'bg-blue-600 text-white'
-                        : 'hover:bg-blue-600 hover:text-white'
-                    }`}
-                  >
-                    <Link href="/admin/dashboard">Admin</Link>
-                  </Button>
-                )}
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Avatar className="cursor-pointer hover:ring-2 hover:ring-blue-600 transition-all">
-                      <AvatarImage
-                        src={session?.user?.image || '/avatar.jpg'}
-                        alt="Profile"
-                      />
-                      <AvatarFallback>
-                        {session?.user?.name?.[0]?.toUpperCase() || 'U'}
-                      </AvatarFallback>
-                    </Avatar>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-56">
-                    <DropdownMenuItem>Profile</DropdownMenuItem>
-                    <DropdownMenuItem>Settings</DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() => setShowSignOutDialog(true)}
-                      className="text-red-600 focus:text-red-600"
+            {/* Mobile/Tablet Right Section */}
+            <div className="lg:hidden flex items-center gap-4">
+              <ModeToggle />
+              {status === 'authenticated' ? (
+                <>
+                  {session?.user?.isAdmin && (
+                    <Button
+                      asChild
+                      variant="outline"
+                      className={`transition-colors ${
+                        isActiveLink('/admin/dashboard')
+                          ? 'bg-primary text-primary-foreground'
+                          : 'hover:bg-primary hover:text-primary-foreground'
+                      }`}
                     >
-                      Sign Out
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </>
-            ) : (
-              <Button
-                onClick={handleSignIn}
-                variant="outline"
-                className="hover:bg-blue-600 hover:text-white transition-colors"
-              >
-                Login
-              </Button>
-            )}
-          </div>
+                      <Link href="/admin/dashboard">Admin</Link>
+                    </Button>
+                  )}
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Avatar className="cursor-pointer hover:ring-2 hover:ring-primary transition-all">
+                        <AvatarImage
+                          src={session?.user?.image || '/avatar.jpg'}
+                          alt="Profile"
+                        />
+                        <AvatarFallback>
+                          {session?.user?.name?.[0]?.toUpperCase() || 'U'}
+                        </AvatarFallback>
+                      </Avatar>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end" className="w-56">
+                      <DropdownMenuItem>Profile</DropdownMenuItem>
+                      <DropdownMenuItem>Settings</DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={() => setShowSignOutDialog(true)}
+                        className="text-red-600 focus:text-red-600"
+                      >
+                        Sign Out
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </>
+              ) : (
+                <Button
+                  onClick={handleSignIn}
+                  variant="outline"
+                  className="hover:bg-primary hover:text-primary-foreground transition-colors"
+                >
+                  Login
+                </Button>
+              )}
+            </div>
 
-          {/* Desktop Navigation */}
-          <DesktopNav
-            status={status}
-            user={session?.user}
-            navItems={navItems}
-            setShowSignOutDialog={setShowSignOutDialog}
-            handleSignIn={handleSignIn}
-            isActiveLink={isActiveLink}
-          />
+            {/* Desktop Navigation */}
+            <DesktopNav
+              status={status}
+              user={session?.user}
+              navItems={navItems}
+              setShowSignOutDialog={setShowSignOutDialog}
+              handleSignIn={handleSignIn}
+              isActiveLink={isActiveLink}
+            />
+          </div>
         </div>
-      </div>
+      </nav>
 
       {/* Mobile/Tablet Bottom Navigation */}
       <MobileNav
@@ -158,6 +161,6 @@ export default function Navbar() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </nav>
+    </>
   );
 }
