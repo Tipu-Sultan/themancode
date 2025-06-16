@@ -43,11 +43,11 @@ const nextConfig = {
         hostname: 'farman-pharma.ct.ws',
       },
       {
-        protocol: 'http',
+        protocol: 'https',
         hostname: 'content.jdmagicbox.com',
       },
       {
-        protocol: 'http',
+        protocol: 'https',
         hostname: 'www.idfcfirstbank.com',
       },
     ],
