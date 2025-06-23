@@ -50,6 +50,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'www.idfcfirstbank.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'foodlio.vercel.app',
+      },
     ],
   },
 };
